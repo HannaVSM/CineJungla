@@ -2,6 +2,7 @@ package com.backend.cinejungla.persistence.entity;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "funcion")
@@ -31,6 +32,17 @@ public class Funcion {
   private  String tipoFuncion;
 
   private Boolean doblaje;
+
+  @ManyToOne
+  @JoinColumn(name = "codigo_pelicula", insertable = false, updatable = false)
+  private Pelicula pelicula;
+
+  @ManyToOne
+  @JoinColumn(name = "codigo_sala", insertable = false, updatable = false)
+  private Sala sala;
+
+  @OneToMany(mappedBy = "funcion")
+  private List<DetalleDispoSilla> detalleDispoSillas;
 
   public Integer getCodigoFuncion() {
     return codigoFuncion;

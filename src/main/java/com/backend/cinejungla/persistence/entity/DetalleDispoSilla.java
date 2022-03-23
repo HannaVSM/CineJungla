@@ -1,6 +1,7 @@
 package com.backend.cinejungla.persistence.entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "detalle_dispo_silla")
@@ -22,6 +23,14 @@ public class DetalleDispoSilla {
 
     @Column (name = "disponibilidad_silla")
     private Boolean disponibilidadSilla;
+
+    @ManyToOne
+    @JoinColumn(name = "codigo_funcion", insertable = false, updatable = false)
+    private Funcion funcion;
+
+    @ManyToOne
+    @JoinColumn(name = "codigo_factura_compra", insertable = false, updatable = false)
+    private FacturaCompra facturaCompra;
 
     public Integer getCodigoDetDispSilla() {
         return codigoDetDispSilla;

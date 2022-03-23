@@ -1,6 +1,7 @@
 package com.backend.cinejungla.persistence.entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "factura_compra")
@@ -19,6 +20,16 @@ public class FacturaCompra {
 
     @Column(name = "cedula_cliente")
     private Integer cedulaCliente;
+
+    @OneToMany(mappedBy = "facturaCompras")
+    private List<DetalleDispoSilla> detalleDispoSillas;
+
+    @ManyToOne
+    @JoinColumn(name = "cedula_cliente", insertable = false, updatable = false)
+    private Cliente cliente;
+
+    @OneToMany(mappedBy = "facturaCompra")
+    private List<CompraSnack> compraSnacks;
 
     public Integer getCodigoFacturaCompra() {
         return codigoFacturaCompra;

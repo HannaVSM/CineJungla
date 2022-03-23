@@ -1,11 +1,9 @@
 package com.backend.cinejungla.persistence.entity;
 
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name="cliente")
@@ -28,6 +26,9 @@ public class Cliente {
 
     @Column(name = "fecha_caducidad_puntos")
     private Date fechaCaducidadPuntos;
+
+    @OneToMany(mappedBy = "cliente")
+    private List<FacturaCompra> facturaCompras;
 
     public Integer getCedulaCliente() {
         return cedulaCliente;

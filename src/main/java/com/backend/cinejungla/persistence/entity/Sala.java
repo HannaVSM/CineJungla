@@ -1,9 +1,7 @@
 package com.backend.cinejungla.persistence.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "sala")
@@ -18,6 +16,17 @@ public class Sala {
 
     @Column (name = "codigo_multiplex")
     private Integer codigoMultiplex;
+
+    //No lo veo necesario
+    @ManyToOne
+    @JoinColumn(name = "codigo_multiplex", insertable = false, updatable = false)
+    private Multiplex multiplex;
+
+    @OneToMany (mappedBy = "sala")
+    private List<Funcion> funciones;
+
+    @OneToMany (mappedBy = "sala")
+    private List<Silla> sillas;
 
     public Integer getCodigoSala() {
         return codigoSala;

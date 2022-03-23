@@ -17,7 +17,7 @@ public class Cargo {
 
     private Double salario;
 
-    @OneToMany(mappedBy = "empleado")
+    @OneToMany(mappedBy = "cargo")
     private List <CargoOcupado> empleados;
 
     public Integer getCodigoCargo() {
