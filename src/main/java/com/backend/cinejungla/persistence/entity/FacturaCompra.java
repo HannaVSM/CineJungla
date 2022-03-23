@@ -21,7 +21,7 @@ public class FacturaCompra {
     @Column(name = "cedula_cliente")
     private Integer cedulaCliente;
 
-    @OneToMany(mappedBy = "facturaCompras")
+    @OneToMany(mappedBy = "facturaCompra")
     private List<DetalleDispoSilla> detalleDispoSillas;
 
     @ManyToOne

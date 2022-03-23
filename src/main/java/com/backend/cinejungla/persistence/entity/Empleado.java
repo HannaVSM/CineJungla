@@ -18,7 +18,7 @@ public class Empleado {
     @Column (name = "codigo_multiplex")
     private Integer codigoMultiplex;
 
-    @OneToMany(mappedBy = "multiplex")
+    @OneToMany(mappedBy = "empleado")
     private List <CargoOcupado> cargos;
 
     @ManyToOne

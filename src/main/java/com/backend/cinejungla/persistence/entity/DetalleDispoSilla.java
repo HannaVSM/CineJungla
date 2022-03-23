@@ -32,6 +32,10 @@ public class DetalleDispoSilla {
     @JoinColumn(name = "codigo_factura_compra", insertable = false, updatable = false)
     private FacturaCompra facturaCompra;
 
+    @ManyToOne
+    @JoinColumn(name = "codigo_silla", insertable = false, updatable = false)
+    private Silla silla;
+
     public Integer getCodigoDetDispSilla() {
         return codigoDetDispSilla;
     }
