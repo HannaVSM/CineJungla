@@ -12,4 +12,10 @@ public class SillaRepository {
     List<Silla> getSillaByPrice (int precioSilla){
         return sillaCrudRepository.sillaByPrice(precioSilla);
     }
+
+    List<Silla> getSillasByCodigoSala (int codigoSala){ return (List<Silla>) sillaCrudRepository.sillasByCodigoSala(codigoSala); }
+
+    List<Silla> getSillasByCodigoSalaAndTipo (int codigoSala, String tipoSilla){
+        return (List<Silla>) sillaCrudRepository.sillasByCodigoSalaAndTipo(codigoSala, tipoSilla);
+    }
 }

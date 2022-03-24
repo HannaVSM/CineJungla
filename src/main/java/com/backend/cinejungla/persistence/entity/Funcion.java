@@ -1,7 +1,8 @@
 package com.backend.cinejungla.persistence.entity;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Date;
+import java.sql.Time;
 import java.util.List;
 
 @Entity
@@ -17,7 +18,7 @@ public class Funcion {
   private Date fechaFuncion;
 
   @Column (name = "hora_funcion")
-  private String horaFuncion;
+  private Time horaFuncion;
 
   @Column(name = "codigo_pelicula")
   private Integer codigoPelicula;
@@ -56,11 +57,11 @@ public class Funcion {
     return fechaFuncion;
   }
 
-  public String getHoraFuncion() {
+  public Time getHoraFuncion() {
     return horaFuncion;
   }
 
-  public void setHoraFuncion(String horaFuncion) {
+  public void setHoraFuncion(Time horaFuncion) {
     this.horaFuncion = horaFuncion;
   }
 

@@ -13,4 +13,7 @@ public class DetalleDispoSillaRepository {
     public Optional<List<DetalleDispoSilla>> getSillasDisponibles(){
         return Optional.ofNullable(detalleDispoSillaCrudRepository.findByDisponibilidadSillaEquals(true));
     }
+    public Optional<DetalleDispoSilla> getDetalleByCodigoSillaAndFuncion(int codigoSilla, int codigoFuncion){
+        return (Optional<DetalleDispoSilla>) detalleDispoSillaCrudRepository.getDetalleByCodigoSillaAndFuncion(codigoSilla, codigoFuncion);
+    }
 }
