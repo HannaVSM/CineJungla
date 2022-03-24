@@ -1,12 +1,16 @@
-package com.backend.cinejungla.persistence;
+package com.backend.cinejungla.domain.service;
 
 import com.backend.cinejungla.persistence.crud.ClienteCrudRepository;
 import com.backend.cinejungla.persistence.entity.Cliente;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-public class ClienteRepository {
+@Service
+public class ClienteService {
 
+    @Autowired
     private ClienteCrudRepository clienteCrudRepository;
 
     public Optional<Cliente> getByCedula(int cedulaCliente){

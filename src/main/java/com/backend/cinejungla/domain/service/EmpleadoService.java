@@ -1,15 +1,19 @@
-package com.backend.cinejungla.persistence;
+package com.backend.cinejungla.domain.service;
 
 import com.backend.cinejungla.persistence.crud.EmpleadoCrudRepository;
 import com.backend.cinejungla.persistence.entity.Empleado;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-public class EmpleadoRepository {
+@Service
+public class EmpleadoService {
 
+    @Autowired
     private EmpleadoCrudRepository empleadoCrudRepository;
 
-    public Optional<Empleado> getAllEmpleados(int cedulaEmpleado){
+    public Optional<Empleado> getEmpleado(int cedulaEmpleado){
         return empleadoCrudRepository.findById(cedulaEmpleado);
     }
 }

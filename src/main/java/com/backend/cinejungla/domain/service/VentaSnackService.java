@@ -1,14 +1,18 @@
-package com.backend.cinejungla.persistence;
+package com.backend.cinejungla.domain.service;
 
 import com.backend.cinejungla.persistence.crud.VentaSnackCrudRepository;
 import com.backend.cinejungla.persistence.entity.Snack;
 import com.backend.cinejungla.persistence.entity.VentaSnack;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-public class VentaSnackRepository {
+@Service
+public class VentaSnackService {
 
+    @Autowired
     private VentaSnackCrudRepository ventaSnackCrudRepository;
 
     public Optional <VentaSnack> disponibilidadSnack(int stock){

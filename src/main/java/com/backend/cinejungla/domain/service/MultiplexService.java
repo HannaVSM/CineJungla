@@ -1,13 +1,17 @@
-package com.backend.cinejungla.persistence;
+package com.backend.cinejungla.domain.service;
 
 import com.backend.cinejungla.persistence.crud.MultiplexCrudRepository;
 import com.backend.cinejungla.persistence.entity.Multiplex;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-public class MultiplexRepository {
+@Service
+public class MultiplexService {
 
+    @Autowired
     private MultiplexCrudRepository multiplexCrudRepository;
 
     public List<Multiplex> getAll() { return (List<Multiplex>) multiplexCrudRepository.getAll(); }

@@ -1,18 +1,19 @@
-package com.backend.cinejungla.persistence;
+package com.backend.cinejungla.domain.service;
 
-import com.backend.cinejungla.persistence.crud.PeliculaCrudRepository;
 import com.backend.cinejungla.persistence.crud.PeliculaEnMultiplexCrudRepository;
 import com.backend.cinejungla.persistence.entity.PeliculaEnMultiplex;
-import com.backend.cinejungla.persistence.entity.PeliculaEnMultiplexPK;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
-public class PeliculaEnMultiplexRepository {
+@Service
+public class PeliculaEnMultiplexService {
 
+    @Autowired
     private PeliculaEnMultiplexCrudRepository peliculaEnMultiplexCrudRepository;
 
-    //Revisar, estoy muy tostada
+    //Revisar, estoy muy tostada. nota2: Parece que está bien
     public List<PeliculaEnMultiplex> disponibilidadPelicula(int codigoMultiplex){
         return (List<PeliculaEnMultiplex>) peliculaEnMultiplexCrudRepository.disponibilidadPelicula(codigoMultiplex);
 

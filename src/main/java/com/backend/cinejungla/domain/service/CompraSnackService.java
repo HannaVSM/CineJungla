@@ -1,13 +1,15 @@
-package com.backend.cinejungla.persistence;
+package com.backend.cinejungla.domain.service;
 
 import com.backend.cinejungla.persistence.crud.CompraSnackCrudRepository;
 import com.backend.cinejungla.persistence.entity.CompraSnack;
-import com.backend.cinejungla.persistence.entity.CompraSnackPK;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 
-public class CompraSnackRepository {
+@Service
+public class CompraSnackService {
 
+    @Autowired
     private CompraSnackCrudRepository compraSnackCrudRepository;
 
     public CompraSnack save(CompraSnack compraSnack){

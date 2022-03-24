@@ -1,13 +1,17 @@
-package com.backend.cinejungla.persistence;
+package com.backend.cinejungla.domain.service;
 
 import com.backend.cinejungla.persistence.crud.DetalleDispoSillaCrudRepository;
 import com.backend.cinejungla.persistence.entity.DetalleDispoSilla;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-public class DetalleDispoSillaRepository {
+@Service
+public class DetalleDispoSillaService {
 
+    @Autowired
     private DetalleDispoSillaCrudRepository detalleDispoSillaCrudRepository;
 
     public Optional<List<DetalleDispoSilla>> getSillasDisponibles(){
