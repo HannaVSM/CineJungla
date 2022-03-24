@@ -19,9 +19,8 @@ public class FuncionController {
     @Autowired
     private FuncionService funcionService;
 
-    //Por definir toca con el id
-    @GetMapping("/{codigo}")
-    public List<Funcion> getFuncionesByPeliculaAndFecha(@PathVariable("codigo") int codigoPelicula, Date fechaFuncion){
+    @GetMapping("/{codigo}/{fecha}")
+    public List<Funcion> getFuncionesByPeliculaAndFecha(@PathVariable("codigo") int codigoPelicula, @PathVariable("fecha") Date fechaFuncion){
 
         return funcionService.getFuncionesByPeliculaAndFecha(codigoPelicula, fechaFuncion);
     }

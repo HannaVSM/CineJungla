@@ -15,8 +15,8 @@ public class VentaSnackService {
     @Autowired
     private VentaSnackCrudRepository ventaSnackCrudRepository;
 
-    public Optional <VentaSnack> disponibilidadSnack(int stock){
-        return ventaSnackCrudRepository.findByStockActualGreaterThan(0);
+    public Optional <List<VentaSnack>> disponibilidadSnack(int stock){
+        return ventaSnackCrudRepository.findByStockActualGreaterThan(stock);
     }
 
     public List<VentaSnack> getAllByCodigoMultiplex(int codigoMultiplex){ return (List<VentaSnack>) ventaSnackCrudRepository.getAllByCodigoMultiplex(codigoMultiplex); }

@@ -13,10 +13,12 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/DispoSilla")
+//Aún no se puede probar porque no hay registros
 public class DetalleDispoSillaController {
 
     @Autowired
     private DetalleDispoSillaService detalleDispoSillaService;
+
 
     @GetMapping("/sillaDispoXd")
     public Optional<List<DetalleDispoSilla>> getSillasDispo(){

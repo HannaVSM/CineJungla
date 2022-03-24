@@ -23,7 +23,7 @@ public class ClienteController {
         return  clienteService.getByCedula(cedulaCliente);
     }
 
-    @GetMapping("/{usuario}")
+    @GetMapping("/sesion/{usuario}")
     public Optional<Cliente> iniciarSesion(@PathVariable("usuario") String usuarioCliente, String passwordCliente){
         return (Optional<Cliente>) clienteService.inicioSesion(usuarioCliente, passwordCliente);
     }

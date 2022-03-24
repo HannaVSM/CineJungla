@@ -26,8 +26,9 @@ public class SillaController {
     @GetMapping("/{codigo}")
     public List<Silla> getSillasByCodigoSala (@PathVariable("codigo")int codigoSala){ return (List<Silla>) sillaService.getSillaByPrice(codigoSala); }
 
-    @GetMapping("/resolverxd")
-    public List<Silla> getSillasByCodigoSalaAndTipo (int codigoSala, String tipoSilla){
+
+    @GetMapping("/{codigo}/{tipo}")
+    public List<Silla> getSillasByCodigoSalaAndTipo (@PathVariable("codigo") int codigoSala, @PathVariable("tipo") String tipoSilla){
         return (List<Silla>) sillaService.getSillasByCodigoSalaAndTipo(codigoSala, tipoSilla);
     }
 }

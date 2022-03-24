@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public interface VentaSnackCrudRepository extends CrudRepository <VentaSnack, VentaSnackPK> {
 
-    Optional <VentaSnack> findByStockActualGreaterThan (int stockActual);
+    Optional <List<VentaSnack>> findByStockActualGreaterThan (int stockActual);
 
     @Query(value = "SELECT * FROM venta_snack where codigo_multiplex = ?", nativeQuery = true)
     List<VentaSnack> getAllByCodigoMultiplex(int codigoMultiplex);

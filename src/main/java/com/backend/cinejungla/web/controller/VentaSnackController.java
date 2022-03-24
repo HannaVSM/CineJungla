@@ -19,10 +19,9 @@ public class VentaSnackController {
     @Autowired
     private VentaSnackService ventaSnackService;
 
-    //Revisar
-    @GetMapping("/stock")
-    public Optional<VentaSnack> disponibilidadSnack(int stock){
-        return ventaSnackService.disponibilidadSnack(0);
+    @GetMapping("/stock/{stock}")
+    public Optional<List<VentaSnack>> disponibilidadSnack(@PathVariable("stock") int stock){
+        return ventaSnackService.disponibilidadSnack(stock);
     }
 
     @GetMapping("/{codigo}")
