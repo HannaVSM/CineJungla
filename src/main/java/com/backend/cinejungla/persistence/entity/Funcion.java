@@ -1,13 +1,14 @@
 package com.backend.cinejungla.persistence.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Date;
 import java.sql.Time;
 import java.util.List;
 
 @Entity
 @Table(name = "funcion")
-public class Funcion {
+public class Funcion implements Serializable {
 
   @Id
   @GeneratedValue ( strategy = GenerationType.IDENTITY)

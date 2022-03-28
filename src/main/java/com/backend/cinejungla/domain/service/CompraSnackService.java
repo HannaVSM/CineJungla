@@ -15,4 +15,8 @@ public class CompraSnackService {
     public CompraSnack save(CompraSnack compraSnack){
         return compraSnackCrudRepository.save(compraSnack);
     }
+
+    public void insertarResgistro(int codigoSnack, int codigoFacturaCompra, int cantidadSnackComprado){
+        compraSnackCrudRepository.registrarFactura(codigoSnack, codigoFacturaCompra, cantidadSnackComprado);
+    }
 }

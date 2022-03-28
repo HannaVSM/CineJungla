@@ -20,4 +20,8 @@ public class DetalleDispoSillaService {
     public Optional<DetalleDispoSilla> getDetalleByCodigoSillaAndFuncion(int codigoSilla, int codigoFuncion){
         return (Optional<DetalleDispoSilla>) detalleDispoSillaCrudRepository.getDetalleByCodigoSillaAndFuncion(codigoSilla, codigoFuncion);
     }
+
+    public void insertarRegistro(int codigoSilla, int codigoFuncion, int codigoFacturaCompra, boolean disponibilidadSilla){
+        detalleDispoSillaCrudRepository.registrarFactura(codigoSilla, codigoFuncion, codigoFacturaCompra, disponibilidadSilla);
+    }
 }

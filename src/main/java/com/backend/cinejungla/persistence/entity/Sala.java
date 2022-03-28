@@ -1,11 +1,12 @@
 package com.backend.cinejungla.persistence.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Table(name = "sala")
-public class Sala {
+public class Sala implements Serializable {
 
     @Id
     @Column (name = "codigo_sala")

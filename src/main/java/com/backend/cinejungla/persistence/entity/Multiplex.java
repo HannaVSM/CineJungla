@@ -1,11 +1,12 @@
 package com.backend.cinejungla.persistence.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Table(name = "multiplex")
-public class Multiplex {
+public class Multiplex implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

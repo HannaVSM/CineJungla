@@ -5,6 +5,7 @@ import com.backend.cinejungla.persistence.entity.Cliente;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.util.Optional;
 
 @Service
@@ -19,5 +20,13 @@ public class ClienteService {
 
     public Optional<Cliente> inicioSesion(String usuarioCliente, String passwordCliente){
         return (Optional<Cliente>) clienteCrudRepository.inicioSesion(usuarioCliente, passwordCliente);
+    }
+
+    public void actualizarPuntos(int puntos, int cedulaCliente){
+        clienteCrudRepository.actualizarPuntos(puntos, cedulaCliente);
+    }
+
+    public void actualizarPuntosAndFecha(int puntos, Date fechaCaducidadPuntos, int cedulaCliente){
+        clienteCrudRepository.actualizarPuntosAndFecha(puntos, fechaCaducidadPuntos, cedulaCliente);
     }
 }

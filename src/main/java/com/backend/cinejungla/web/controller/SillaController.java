@@ -3,6 +3,9 @@ package com.backend.cinejungla.web.controller;
 import com.backend.cinejungla.domain.service.SillaService;
 import com.backend.cinejungla.persistence.crud.SillaCrudRepository;
 import com.backend.cinejungla.persistence.entity.Silla;
+import com.backend.cinejungla.web.procesoCompra.ProcesoCompra;
+import com.backend.cinejungla.web.procesoCompra.ProcesoConcreto;
+import com.backend.cinejungla.web.procesoCompra.SillaTM;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,5 +33,16 @@ public class SillaController {
     @GetMapping("/{codigo}/{tipo}")
     public List<Silla> getSillasByCodigoSalaAndTipo (@PathVariable("codigo") int codigoSala, @PathVariable("tipo") String tipoSilla){
         return (List<Silla>) sillaService.getSillasByCodigoSalaAndTipo(codigoSala, tipoSilla);
+    }
+
+    @GetMapping("/sillasFuncion/{codigoFuncion}/{tipoSilla}")
+    public List<SillaTM> getSillasParaUnaFuncion (@PathVariable("codigoFuncion") int codigoFuncion, @PathVariable("tipoSilla") String tipoSilla){
+
+        ProcesoCompra proceso = new ProcesoConcreto();
+
+        return (List<SillaTM>)proceso.consultarSillasFuncion(codigoFuncion, tipoSilla);
+
+
+        //return (List<Silla>) sillaService.getSillasByCodigoSalaAndTipo(codigoFuncion, tipoSilla);
     }
 }

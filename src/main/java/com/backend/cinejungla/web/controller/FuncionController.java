@@ -3,6 +3,9 @@ package com.backend.cinejungla.web.controller;
 
 import com.backend.cinejungla.domain.service.FuncionService;
 import com.backend.cinejungla.persistence.entity.Funcion;
+import com.backend.cinejungla.web.procesoCompra.Pedido;
+import com.backend.cinejungla.web.procesoCompra.ProcesoCompra;
+import com.backend.cinejungla.web.procesoCompra.ProcesoConcreto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,9 +22,21 @@ public class FuncionController {
     @Autowired
     private FuncionService funcionService;
 
-    @GetMapping("/{codigo}/{fecha}")
-    public List<Funcion> getFuncionesByPeliculaAndFecha(@PathVariable("codigo") int codigoPelicula, @PathVariable("fecha") Date fechaFuncion){
+    @GetMapping("/{codigoMultiplex}/{codigoPelicula}/{fecha}")
+    public List<Funcion> getFuncionesByPeliculaAndFecha(@PathVariable("codigoMultiplex") int codigoMultiplex, @PathVariable("codigoPelicula") int codigoPelicula, @PathVariable("fecha") Date fechaFuncion){
 
-        return funcionService.getFuncionesByPeliculaAndFecha(codigoPelicula, fechaFuncion);
+        ProcesoCompra proceso = new ProcesoConcreto();
+
+        //List<Funcion> funciones = proceso.pruebaFunciones(codigoMultiplex, codigoPelicula, fechaFuncion);
+
+        //Pedido pedido = (Pedido)proceso.leerArchivo();
+
+        //System.out.println(pedido.getMultiplex().getNombreMultiplex());
+
+        return proceso.consultarFunciones(codigoMultiplex, codigoPelicula, fechaFuncion);
+
+        //return funciones;
+
+        //return funcionService.getFuncionesByPeliculaAndFecha(codigoPelicula, fechaFuncion);
     }
 }

@@ -36,4 +36,10 @@ public class VentaSnack {
     public void setStockActual(Integer stockActual) {
         this.stockActual = stockActual;
     }
+
+
+
+    public Snack getSnack() {
+        return snack;
+    }
 }
