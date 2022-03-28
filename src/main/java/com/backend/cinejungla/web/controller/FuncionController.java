@@ -7,14 +7,12 @@ import com.backend.cinejungla.web.procesoCompra.Pedido;
 import com.backend.cinejungla.web.procesoCompra.ProcesoCompra;
 import com.backend.cinejungla.web.procesoCompra.ProcesoConcreto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
 import java.util.List;
 
+@CrossOrigin(origins = ("http://localhost:4200"))
 @RestController
 @RequestMapping("/funcion")
 public class FuncionController {
