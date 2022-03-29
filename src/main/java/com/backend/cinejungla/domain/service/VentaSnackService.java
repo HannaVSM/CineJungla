@@ -45,11 +45,9 @@ public class VentaSnackService {
 
         for(int i=0; i<ventaSnacks.size(); i++){
             int codigoSnack = ventaSnacks.get(i).getSnack().getCodigoSnack();
-            //System.out.println(ventaSnacks.get(i).getId().getCodigoSnack());
             Optional<Snack> snack = snackService.getSnackByCodigo(codigoSnack);
             SnackTM snackTM = new SnackTM();
             snackTM.setCodigoSnack(snack.get().getCodigoSnack());
-            //System.out.println(snack.get().getCodigoSnack());
             snackTM.setNombreSnack(snack.get().getNombreSnack());
             snackTM.setPrecioUnitario(snack.get().getPrecioUnitario());
             snackTM.setCantidadStock(ventaSnacks.get(i).getStockActual());

@@ -14,17 +14,14 @@ public class SillaTM implements Serializable {
 
     private int codigoSala;
 
-    private int codigoFuncion;
-
     private boolean disponibilidadSilla;
 
-    public SillaTM(int codigoSilla, String ubicacionSilla, String tipoSilla, int precioSilla, int codigoSala, int codigoFuncion, boolean disponibilidadSilla){
+    public SillaTM(int codigoSilla, String ubicacionSilla, String tipoSilla, int precioSilla, int codigoSala, boolean disponibilidadSilla){
         this.codigoSilla = codigoSilla;
         this.ubicacionSilla = ubicacionSilla;
         this.tipoSilla = tipoSilla;
         this.precioSilla = precioSilla;
         this.codigoSala = codigoSala;
-        this.codigoFuncion = codigoFuncion;
         this.disponibilidadSilla = disponibilidadSilla;
     }
 
@@ -50,11 +47,7 @@ public class SillaTM implements Serializable {
         return codigoSala;
     }
 
-    public int getCodigoFuncion() {
-        return codigoFuncion;
-    }
-
-    public boolean isDisponibilidadSilla() {
+    public boolean getDisponibilidadSilla() {
         return disponibilidadSilla;
     }
 
@@ -76,10 +69,6 @@ public class SillaTM implements Serializable {
 
     public void setCodigoSala(int codigoSala) {
         this.codigoSala = codigoSala;
-    }
-
-    public void setCodigoFuncion(int codigoFuncion) {
-        this.codigoFuncion = codigoFuncion;
     }
 
     public void setDisponibilidadSilla(boolean disponibilidadSilla) {

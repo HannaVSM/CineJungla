@@ -15,7 +15,7 @@ public interface ClienteCrudRepository extends CrudRepository<Cliente, Integer> 
     @Query(value ="SELECT * FROM cliente WHERE cedula_cliente = ?", nativeQuery = true)
     Optional<Cliente> getByCedula(int cedulaCliente);
 
-    @Query(value ="SELECT usuario_cliente, password_cliente FROM cliente WHERE usuario_cliente = ? AND password_cliente = ?", nativeQuery = true)
+    @Query(value ="SELECT * FROM cliente WHERE usuario_cliente = ? AND password_cliente = ?", nativeQuery = true)
     Optional<Cliente> inicioSesion(String usuarioCliente, String passwordCliente);
 
     @Modifying

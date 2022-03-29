@@ -1,10 +1,7 @@
 package com.backend.cinejungla.web.procesoCompra;
 
-import com.backend.cinejungla.persistence.crud.FuncionCrudRepository;
-import com.backend.cinejungla.persistence.entity.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
+import com.backend.cinejungla.persistence.entity.*;
 import java.io.Serializable;
 import java.sql.Date;
 import java.util.List;
@@ -14,28 +11,19 @@ public class Pedido implements Serializable {
 
     private Cliente cliente;
 
-    //Dejarlo como codigo
-    private Multiplex multiplex;
+    private int codigoMultiplex;
 
     private Date fechaFuncion;
 
-    //Dejarla como codigo
-    private Pelicula pelicula;
-
-    //Esto no es necesario
-    private List<Funcion> funciones;
+    private int codigoPelicula;
 
     private Funcion funcionEscogida;
 
     private String tipoSilla;
 
-    //Creo que esto no es necesario
     private List<Silla> listadoSillas;
 
     private List<SillaTM> listadoSillasTM;
-
-    //Esto no es necesario
-    private List<SillaTM> sillasEscogidas;
 
     private List<SnackTM> snacksComprados;
 
@@ -48,20 +36,16 @@ public class Pedido implements Serializable {
         return cliente;
     }
 
-    public Multiplex getMultiplex() {
-        return multiplex;
+    public int getCodigoMultiplex() {
+        return codigoMultiplex;
     }
 
     public Date getFechaFuncion() {
         return fechaFuncion;
     }
 
-    public Pelicula getPelicula() {
-        return pelicula;
-    }
-
-    public List<Funcion> getFunciones() {
-        return funciones;
+    public int getCodigoPelicula() {
+        return codigoPelicula;
     }
 
     public Funcion getFuncionEscogida() {
@@ -80,10 +64,6 @@ public class Pedido implements Serializable {
         return listadoSillasTM;
     }
 
-    public List<SillaTM> getSillasEscogidas() {
-        return sillasEscogidas;
-    }
-
     public List<SnackTM> getSnacksComprados() {
         return snacksComprados;
     }
@@ -92,24 +72,18 @@ public class Pedido implements Serializable {
         return facturaCompraTM;
     }
 
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
+    public void setCliente(Cliente cliente) { this.cliente = cliente; }
 
-    public void setMultiplex(Multiplex multiplex) {
-        this.multiplex = multiplex;
+    public void setCodigoMultiplex(int codigoMultiplex) {
+        this.codigoMultiplex = codigoMultiplex;
     }
 
     public void setFechaFuncion(Date fechaFuncion) {
         this.fechaFuncion = fechaFuncion;
     }
 
-    public void setPelicula(Pelicula pelicula) {
-        this.pelicula = pelicula;
-    }
-
-    public void setFunciones(List<Funcion> funciones) {
-        this.funciones = funciones;
+    public void setCodigoPelicula(int codigoPelicula) {
+        this.codigoPelicula = codigoPelicula;
     }
 
     public void setFuncionEscogida(Funcion funcionEscogida) {
@@ -126,10 +100,6 @@ public class Pedido implements Serializable {
 
     public void setListadoSillasTM(List<SillaTM> listadoSillasTM) {
         this.listadoSillasTM = listadoSillasTM;
-    }
-
-    public void setSillasEscogidas(List<SillaTM> sillasEscogidas) {
-        this.sillasEscogidas = sillasEscogidas;
     }
 
     public void setSnacksComprados(List<SnackTM> snacksComprados) {

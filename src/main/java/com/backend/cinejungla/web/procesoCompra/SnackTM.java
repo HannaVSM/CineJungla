@@ -10,7 +10,6 @@ public class SnackTM implements Serializable {
 
     private double precioUnitario;
 
-    //No sirve
     private int cantidadStock;
 
     private int cantidadComprada;

@@ -22,10 +22,12 @@ public class ClienteService {
         return (Optional<Cliente>) clienteCrudRepository.inicioSesion(usuarioCliente, passwordCliente);
     }
 
+    //No pasa por el controller
     public void actualizarPuntos(int puntos, int cedulaCliente){
         clienteCrudRepository.actualizarPuntos(puntos, cedulaCliente);
     }
 
+    //No pasa por el controller
     public void actualizarPuntosAndFecha(int puntos, Date fechaCaducidadPuntos, int cedulaCliente){
         clienteCrudRepository.actualizarPuntosAndFecha(puntos, fechaCaducidadPuntos, cedulaCliente);
     }

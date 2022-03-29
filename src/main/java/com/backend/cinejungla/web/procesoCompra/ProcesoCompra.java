@@ -9,23 +9,12 @@ import java.util.Optional;
 
 public abstract class ProcesoCompra implements Serializable {
 
-
-    /*public Pedido serializacion(){
-
-        Pedido pedido = new Pedido();
-
-        guardarArchivo(pedido);
-        pedido = leerArchivo();
-
-        return pedido;
-    }*/
-
     public List<Funcion> pruebaFunciones (int codigoMultiplex, int codigoPelicula, Date fechaFuncion){
         Pedido pedido = new Pedido();
-        pedido = guardarInfoBasica(pedido, codigoMultiplex, codigoPelicula, fechaFuncion);
-        pedido = funcionesPorPeliculaAndFecha(pedido);
+        guardarInfoBasica(pedido, codigoMultiplex, codigoPelicula, fechaFuncion);
+        List<Funcion> funciones = funcionesPorPeliculaAndFecha();
 
-        return (List<Funcion>)pedido.getFunciones();
+        return funciones;
     }
 
     //Se hacen los dos filtros para encontrar las funciones para una pelicula, en un multiplex, en un cierto dia
@@ -33,13 +22,11 @@ public abstract class ProcesoCompra implements Serializable {
 
         Pedido pedido = new Pedido();
 
-        //Pedido pedido = leerArchivo();
-        pedido = guardarInfoBasica(pedido, codigoMultiplex, codigoPelicula, fechaFuncion);
-        pedido = funcionesPorPeliculaAndFecha(pedido);
-        pedido = funcionesEnMultiplex(pedido);
-        guardarArchivo(pedido);
+        guardarInfoBasica(pedido, codigoMultiplex, codigoPelicula, fechaFuncion);
+        List<Funcion> funciones = funcionesPorPeliculaAndFecha();
+        funciones = funcionesEnMultiplex(funciones);
 
-        return (List<Funcion>)pedido.getFunciones();
+        return funciones;
     }
 
     /*public Pedido contultarFuncionesFiltroTipo(int codigoMultiplex, int codigoPelicula, Date fechaFuncion){
@@ -90,7 +77,6 @@ public abstract class ProcesoCompra implements Serializable {
         guardarArchivo(pedido);
 
         return generarFactura();
-
     }
 
     public FacturaCompraTM generarFactura(){
@@ -102,24 +88,23 @@ public abstract class ProcesoCompra implements Serializable {
         return factura;
     }
 
-    public void pagarFactura(boolean puntosRedimidos){
+    public void pagarFactura(boolean redimirPuntos){
 
-        int codigoFacturaCompra = registrarFacturaCompra(puntosRedimidos);
+        int codigoFacturaCompra = registrarFacturaCompra(redimirPuntos);
         registrarDispoSillas(codigoFacturaCompra);
         registrarCompraSnack(codigoFacturaCompra);
         modificarVentaSnack();
         modificarPuntosCliente();
 
         Pedido pedido = (Pedido)leerArchivo();
-
     }
 
 
-    public abstract Pedido guardarInfoBasica(Pedido pedido, int codigoMultiplex, int codigoPelicula, Date fechaFuncion);
+    public abstract void guardarInfoBasica(Pedido pedido, int codigoMultiplex, int codigoPelicula, Date fechaFuncion);
     public abstract Pedido leerArchivo();
     public abstract void guardarArchivo(Pedido pedido);
-    public abstract Pedido funcionesPorPeliculaAndFecha(Pedido pedido);
-    public abstract Pedido funcionesEnMultiplex(Pedido pedido);
+    public abstract List<Funcion> funcionesPorPeliculaAndFecha();
+    public abstract List<Funcion> funcionesEnMultiplex(List<Funcion> funciones);
     public abstract Pedido sillasParaLaFuncion(int codigoFuncion, String tipoSilla);
     public abstract Pedido disponibilidadSillas(Pedido pedido);
     public abstract Pedido quintoPaso(Pedido pedido);

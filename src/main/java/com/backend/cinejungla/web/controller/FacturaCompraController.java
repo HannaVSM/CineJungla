@@ -4,7 +4,6 @@ import com.backend.cinejungla.domain.service.FacturaCompraService;
 import com.backend.cinejungla.persistence.entity.FacturaCompra;
 import com.backend.cinejungla.web.procesoCompra.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.web.JsonPath;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,15 +34,9 @@ public class FacturaCompraController {
         return proceso.seleccionarSnacks(snacksTM);
     }
 
-    @PostMapping("/prueba")
-    public void pruebaJson(@RequestBody List<SillaTM> sillasTM){
-        System.out.println(sillasTM.get(0).getUbicacionSilla());
-        System.out.println(sillasTM.get(1).getUbicacionSilla());
-    }
-
-    @PostMapping("/pagoFactura/{puntosRedimidos}")
-    public void pagoFactura(@PathVariable("puntosRedimidos") boolean puntosRedimidos){
+    @GetMapping("/pagoFactura/{redimirPuntos}")
+    public void pagoFactura(@PathVariable("redimirPuntos") boolean redimirPuntos){
         ProcesoCompra proceso = new ProcesoConcreto();
-        proceso.pagarFactura(puntosRedimidos);
+        proceso.pagarFactura(redimirPuntos);
     }
 }

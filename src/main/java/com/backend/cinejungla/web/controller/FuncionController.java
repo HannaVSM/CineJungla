@@ -3,7 +3,6 @@ package com.backend.cinejungla.web.controller;
 
 import com.backend.cinejungla.domain.service.FuncionService;
 import com.backend.cinejungla.persistence.entity.Funcion;
-import com.backend.cinejungla.web.procesoCompra.Pedido;
 import com.backend.cinejungla.web.procesoCompra.ProcesoCompra;
 import com.backend.cinejungla.web.procesoCompra.ProcesoConcreto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,16 +24,6 @@ public class FuncionController {
 
         ProcesoCompra proceso = new ProcesoConcreto();
 
-        //List<Funcion> funciones = proceso.pruebaFunciones(codigoMultiplex, codigoPelicula, fechaFuncion);
-
-        //Pedido pedido = (Pedido)proceso.leerArchivo();
-
-        //System.out.println(pedido.getMultiplex().getNombreMultiplex());
-
         return proceso.consultarFunciones(codigoMultiplex, codigoPelicula, fechaFuncion);
-
-        //return funciones;
-
-        //return funcionService.getFuncionesByPeliculaAndFecha(codigoPelicula, fechaFuncion);
     }
 }
