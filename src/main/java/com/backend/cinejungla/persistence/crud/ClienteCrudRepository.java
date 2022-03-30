@@ -24,6 +24,11 @@ public interface ClienteCrudRepository extends CrudRepository<Cliente, Integer> 
     void actualizarPuntos(@Param("puntos") int puntos, @Param("cedulaCliente") int cedulaCliente);
 
     @Modifying
+    @Query(value = "UPDATE cliente SET puntos = 0, fecha_caducidad_puntos = null WHERE cedula_cliente = :cedulaCliente", nativeQuery = true)
+    @Transactional
+    void resetearPuntosAndFecha(@Param("cedulaCliente") int cedulaCliente);
+
+    @Modifying
     @Query(value = "UPDATE cliente SET puntos = :puntos, fecha_caducidad_puntos = :fechaCaducidadPuntos WHERE cedula_cliente = :cedulaCliente", nativeQuery = true)
     @Transactional
     void actualizarPuntosAndFecha(@Param("puntos") int puntos, @Param("fechaCaducidadPuntos") Date fechaCaducidadPuntos, @Param("cedulaCliente") int cedulaCliente);

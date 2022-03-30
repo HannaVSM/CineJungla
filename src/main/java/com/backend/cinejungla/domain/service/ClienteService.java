@@ -31,4 +31,12 @@ public class ClienteService {
     public void actualizarPuntosAndFecha(int puntos, Date fechaCaducidadPuntos, int cedulaCliente){
         clienteCrudRepository.actualizarPuntosAndFecha(puntos, fechaCaducidadPuntos, cedulaCliente);
     }
+
+    public void resetearPuntosAndFecha(int cedulaCliente){
+        clienteCrudRepository.resetearPuntosAndFecha(cedulaCliente);
+    }
+
+    public void registrarCliente(Cliente cliente){
+        clienteCrudRepository.save(cliente);
+    }
 }

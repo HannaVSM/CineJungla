@@ -225,21 +225,6 @@ public class ProcesoConcreto extends ProcesoCompra {
         return pedido;
     }
 
-    //(Opcional) se filtran las funciones por 2D o 3D
-    @Override
-    public Pedido quintoPaso(Pedido pedido){
-
-        return pedido;
-    }
-
-    //(Opcional) se filtran las funciones por dobladas o subtituladas
-    @Override
-    public Pedido sextoPaso(Pedido pedido){
-
-        return pedido;
-    }
-
-
     //Se guardan las sillas escogidas y los snacks comprados
     @Override
     public Pedido guardarSillas(List<SillaTM> sillasTM){
@@ -364,7 +349,7 @@ public class ProcesoConcreto extends ProcesoCompra {
             pedido.getFacturaCompraTM().setPuntosRedimidos(true);
             pedido.getFacturaCompraTM().setTotalPago(totalPago);
             guardarArchivo(pedido);
-            procesoConcreto.clienteService.actualizarPuntos(0, 76332522);
+            procesoConcreto.clienteService.resetearPuntosAndFecha(10526952);
         }
 
 
@@ -374,7 +359,7 @@ public class ProcesoConcreto extends ProcesoCompra {
         List<FacturaCompra> facturas = procesoConcreto.facturaCompraService.getAll();
         int codigoFactura = facturas.size() + 1;
 
-        procesoConcreto.facturaCompraService.insertarRegistro(puntosRedimidos, totalPago, 76332522, fechaFactura);
+        procesoConcreto.facturaCompraService.insertarRegistro(puntosRedimidos, totalPago, 10526952, fechaFactura);
 
         return codigoFactura;
 
@@ -454,7 +439,7 @@ public class ProcesoConcreto extends ProcesoCompra {
         int puntosTotales = puntosPorBoletas+puntosPorSnacks;
 
         //int cedulaCliente = pedido.getCliente().getCedulaCliente();
-        Optional<Cliente> cliente = procesoConcreto.clienteService.getByCedula(76332522);
+        Optional<Cliente> cliente = procesoConcreto.clienteService.getByCedula(10526952);
         int puntosCliente = cliente.get().getPuntos();
         int puntosActuales = puntosTotales+puntosCliente;
 
@@ -465,10 +450,10 @@ public class ProcesoConcreto extends ProcesoCompra {
                 calendar.add(Calendar.MONTH, 6);
                 Date fechaCaducidadPuntos = new Date(calendar.getTimeInMillis());
 
-                procesoConcreto.clienteService.actualizarPuntosAndFecha(puntosActuales, fechaCaducidadPuntos, 76332522);
+                procesoConcreto.clienteService.actualizarPuntosAndFecha(puntosActuales, fechaCaducidadPuntos, 10526952);
             }
             else{
-                procesoConcreto.clienteService.actualizarPuntos(puntosActuales, 76332522);
+                procesoConcreto.clienteService.actualizarPuntos(puntosActuales, 10526952);
             }
         }
     }

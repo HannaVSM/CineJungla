@@ -25,4 +25,9 @@ public class ClienteController {
     public Optional<Cliente> iniciarSesion(@PathVariable("usuario") String usuarioCliente, @PathVariable("password") String passwordCliente){
         return (Optional<Cliente>) clienteService.inicioSesion(usuarioCliente, passwordCliente);
     }
+
+    @PostMapping("registrarCliente")
+    public void registrarCliente(@RequestBody Cliente cliente){
+        clienteService.registrarCliente(cliente);
+    }
 }

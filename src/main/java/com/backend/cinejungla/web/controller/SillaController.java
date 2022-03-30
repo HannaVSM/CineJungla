@@ -39,8 +39,5 @@ public class SillaController {
         ProcesoCompra proceso = new ProcesoConcreto();
 
         return (List<SillaTM>)proceso.consultarSillasFuncion(codigoFuncion, tipoSilla);
-
-
-        //return (List<Silla>) sillaService.getSillasByCodigoSalaAndTipo(codigoFuncion, tipoSilla);
     }
 }

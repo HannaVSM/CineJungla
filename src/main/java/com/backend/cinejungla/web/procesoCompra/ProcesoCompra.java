@@ -29,28 +29,6 @@ public abstract class ProcesoCompra implements Serializable {
         return funciones;
     }
 
-    /*public Pedido contultarFuncionesFiltroTipo(int codigoMultiplex, int codigoPelicula, Date fechaFuncion){
-
-        Pedido pedido = new Pedido();
-
-        //Pedido pedido = leerArchivo();
-        pedido = consultarFunciones(codigoMultiplex, codigoPelicula, fechaFuncion);
-        quintoPaso(pedido);
-
-        return pedido;
-    }
-
-    public Pedido contultarFuncionesFiltroLenguaje(int codigoMultiplex, int codigoPelicula, Date fechaFuncion){
-        Pedido pedido = new Pedido();
-
-        //Pedido pedido = leerArchivo();
-        pedido = consultarFunciones(codigoMultiplex, codigoPelicula, fechaFuncion);
-        sextoPaso(pedido);
-
-        return pedido;
-    }*/
-
-
     //Se hacen los filtros  para encontrar las sillas generales o preferenciales para la funcion escogida
     public List<SillaTM> consultarSillasFuncion(int codigoFuncion, String tipoSilla){
         Pedido pedido = new Pedido();
@@ -107,8 +85,6 @@ public abstract class ProcesoCompra implements Serializable {
     public abstract List<Funcion> funcionesEnMultiplex(List<Funcion> funciones);
     public abstract Pedido sillasParaLaFuncion(int codigoFuncion, String tipoSilla);
     public abstract Pedido disponibilidadSillas(Pedido pedido);
-    public abstract Pedido quintoPaso(Pedido pedido);
-    public abstract Pedido sextoPaso(Pedido pedido);
     public abstract Pedido guardarSillas(List<SillaTM> sillasTM);
     public abstract Pedido guardarSnacks(Optional<List<SnackTM>> snacksTM);
     public abstract FacturaCompraTM generarFacturaCompra();
