@@ -39,8 +39,6 @@ public class VentaSnackService {
 
         List<SnackTM> listaSnacksTM = new ArrayList<SnackTM>();
 
-        //List<VentaSnack> ventaSnacks = getAllByCodigoMultiplex(pedido.getMultiplex().getCodigoMultiplex());
-
         List<VentaSnack> ventaSnacks = getAllByCodigoMultiplex(codigoMultiplex);
 
         for(int i=0; i<ventaSnacks.size(); i++){
@@ -51,6 +49,7 @@ public class VentaSnackService {
             snackTM.setNombreSnack(snack.get().getNombreSnack());
             snackTM.setPrecioUnitario(snack.get().getPrecioUnitario());
             snackTM.setCantidadStock(ventaSnacks.get(i).getStockActual());
+            snackTM.setDireccionImagen(snack.get().getDireccionImagen());
 
             listaSnacksTM.add(snackTM);
         }

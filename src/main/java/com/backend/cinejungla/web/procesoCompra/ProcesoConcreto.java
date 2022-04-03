@@ -290,6 +290,23 @@ public class ProcesoConcreto extends ProcesoCompra {
     }
 
     @Override
+    public boolean posibilidadRedimirPuntos(){
+        Cliente cliente = leerArchivoCliente();
+        Pedido pedido = leerPedido();
+
+        boolean poderRedimirPuntos = false;
+
+        int puntosCliente = cliente.getPuntos();
+        String tipoSilla = pedido.getTipoSilla();
+
+        if(puntosCliente == 100 && tipoSilla.equals("general")){
+            poderRedimirPuntos = true;
+        }
+
+        return poderRedimirPuntos;
+    }
+
+    @Override
     public FacturaCompraTM generarFacturaCompra(){
 
         Pedido pedido = leerPedido();

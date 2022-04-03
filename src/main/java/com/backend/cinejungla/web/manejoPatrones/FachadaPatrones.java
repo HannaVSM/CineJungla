@@ -33,10 +33,12 @@ public class FachadaPatrones {
         return procesoCompra.seleccionarSnacks(snacksTM);
     }
 
+    public static boolean posibilidadRedimirPuntos(){
+        return procesoCompra.posibilidadRedimirPuntos();
+    }
+
     public static void pagarFactura(boolean redimirPuntos){
-
         procesoCompra.pagarFactura(redimirPuntos);
-
     }
 
     public static String mostrarMensaje(){

@@ -58,6 +58,7 @@ public abstract class ProcesoCompra implements Serializable {
         return generarFactura();
     }
 
+
     public FacturaCompraTM generarFactura(){
 
         FacturaCompraTM factura = new FacturaCompraTM();
@@ -89,6 +90,7 @@ public abstract class ProcesoCompra implements Serializable {
     public abstract Pedido disponibilidadSillas(Pedido pedido);
     public abstract Pedido guardarSillas(List<SillaTM> sillasTM);
     public abstract Pedido guardarSnacks(Optional<List<SnackTM>> snacksTM);
+    public abstract boolean posibilidadRedimirPuntos();
     public abstract FacturaCompraTM generarFacturaCompra();
     public abstract int registrarFacturaCompra(boolean puntosRedimidos);
     public abstract void registrarDispoSillas(int codigoFacturaCompra);

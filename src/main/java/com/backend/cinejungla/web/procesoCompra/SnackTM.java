@@ -14,6 +14,8 @@ public class SnackTM implements Serializable {
 
     private int cantidadComprada;
 
+    private String direccionImagen;
+
     public SnackTM(int codigoSnack, String nombreSnack, double precioUnitario, int cantidadStock, int cantidadComprada){
         this.codigoSnack = codigoSnack;
         this.nombreSnack = nombreSnack;
@@ -63,4 +65,8 @@ public class SnackTM implements Serializable {
     public void setCantidadComprada(int cantidadComprada) {
         this.cantidadComprada = cantidadComprada;
     }
+
+    public String getDireccionImagen() { return direccionImagen; }
+
+    public void setDireccionImagen(String direccionImagen) { this.direccionImagen = direccionImagen; }
 }

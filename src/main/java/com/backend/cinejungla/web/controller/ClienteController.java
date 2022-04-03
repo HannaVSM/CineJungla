@@ -20,22 +20,6 @@ public class ClienteController {
 
     @Autowired
     private ClienteService clienteService;
-    /*
-    @GetMapping("/serializar/{cedulaCliente}")
-    public void serializar(@PathVariable("cedulaCliente") int cedulaCLiente){
-        try{
-            FileOutputStream fileOut = new FileOutputStream("cliente.obj");
-            ObjectOutputStream salida = new ObjectOutputStream(fileOut);
-
-            Optional<Cliente> cliente = clienteService.getByCedula(cedulaCLiente);
-            salida.writeObject(cliente.get());
-            salida.close();
-        }
-        catch(Exception e){
-            System.out.println("Fallo");
-            e.printStackTrace();
-        }
-    }*/
 
     @GetMapping("/{cedula}")
     public Optional<Cliente> getByCedula(@PathVariable("cedula") int cedulaCliente){

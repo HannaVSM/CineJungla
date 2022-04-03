@@ -10,6 +10,6 @@ import java.util.Optional;
 
 public interface PeliculaEnMultiplexCrudRepository extends CrudRepository <PeliculaEnMultiplex, PeliculaEnMultiplexPK> {
 
-    @Query(value = "SELECT * FROM pelicula_en_multiplex WHERE codigo_multiplex = ?", nativeQuery = true)
-    List<PeliculaEnMultiplex> disponibilidadPelicula(int codigoMultiplex);
+    @Query(value = "SELECT * FROM pelicula_en_multiplex WHERE codigo_pelicula = ? AND pelicula_en_cartelera = true", nativeQuery = true)
+    List<PeliculaEnMultiplex> disponibilidadPelicula(int codigoPelicula);
 }

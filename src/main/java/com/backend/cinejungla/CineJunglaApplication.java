@@ -1,6 +1,5 @@
 package com.backend.cinejungla;
 
-import com.backend.cinejungla.persistence.entity.Silla;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

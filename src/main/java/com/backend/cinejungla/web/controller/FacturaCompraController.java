@@ -23,17 +23,20 @@ public class FacturaCompraController {
         return facturaCompraService.getFacturasCliente(cedulaCliente);
     }
 
-    @PostMapping("/seleccionarSillas")
+    @GetMapping("/seleccionarSillas")
     public void seleccionarSillas(@RequestBody List<SillaTM> sillasTM){
         FachadaPatrones.seleccionarSillas(sillasTM);
     }
 
-    @PostMapping("/seleccionarSnacks")
+    @GetMapping("/seleccionarSnacks")
     public FacturaCompraTM seleccionarSnacks(@RequestBody Optional<List<SnackTM>> snacksTM){
         return FachadaPatrones.seleccionarSnacks(snacksTM);
     }
 
-    @GetMapping("/pagoFactura/{redimirPuntos}")
+    @GetMapping("/posibilidadRedimirPuntos")
+    public boolean posibilidadRedimirPuntos(){ return FachadaPatrones.posibilidadRedimirPuntos(); }
+
+    @PostMapping("/pagoFactura/{redimirPuntos}")
     public void pagoFactura(@PathVariable("redimirPuntos") boolean redimirPuntos){
         FachadaPatrones.pagarFactura(redimirPuntos);
     }
