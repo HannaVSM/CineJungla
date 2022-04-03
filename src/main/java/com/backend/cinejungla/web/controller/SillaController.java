@@ -3,6 +3,7 @@ package com.backend.cinejungla.web.controller;
 import com.backend.cinejungla.domain.service.SillaService;
 import com.backend.cinejungla.persistence.crud.SillaCrudRepository;
 import com.backend.cinejungla.persistence.entity.Silla;
+import com.backend.cinejungla.web.manejoPatrones.FachadaPatrones;
 import com.backend.cinejungla.web.procesoCompra.ProcesoCompra;
 import com.backend.cinejungla.web.procesoCompra.ProcesoConcreto;
 import com.backend.cinejungla.web.procesoCompra.SillaTM;
@@ -35,9 +36,6 @@ public class SillaController {
 
     @GetMapping("/sillasFuncion/{codigoFuncion}/{tipoSilla}")
     public List<SillaTM> getSillasParaUnaFuncion (@PathVariable("codigoFuncion") int codigoFuncion, @PathVariable("tipoSilla") String tipoSilla){
-
-        ProcesoCompra proceso = new ProcesoConcreto();
-
-        return (List<SillaTM>)proceso.consultarSillasFuncion(codigoFuncion, tipoSilla);
+        return FachadaPatrones.consultarSillasFuncion(codigoFuncion, tipoSilla);
     }
 }

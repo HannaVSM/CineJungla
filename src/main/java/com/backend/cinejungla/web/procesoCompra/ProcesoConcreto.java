@@ -82,7 +82,42 @@ public class ProcesoConcreto extends ProcesoCompra {
     }
 
     @Override
-    public Pedido leerArchivo(){
+    public Cliente leerArchivoCliente(){
+        Cliente cliente = new Cliente();
+
+        try{
+
+            FileInputStream fileIn = new FileInputStream("cliente.obj");
+            ObjectInputStream entrada = new ObjectInputStream(fileIn);
+
+            cliente = (Cliente)entrada.readObject();
+            entrada.close();
+        }
+        catch(Exception e){
+            System.out.println("Fallo al leer el archivo cliente");
+            e.printStackTrace();
+        }
+
+        return cliente;
+    }
+
+    @Override
+    public void guardarArchivoCliente(Cliente cliente){
+        try{
+            FileOutputStream fileOut = new FileOutputStream("cliente.obj");
+            ObjectOutputStream salida = new ObjectOutputStream(fileOut);
+
+            salida.writeObject(cliente);
+            salida.close();
+        }
+        catch(Exception e){
+            System.out.println("Fallo al guardar del archivo cliente");
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public Pedido leerPedido(){
         Pedido pedido = new Pedido();
 
         try{
@@ -94,7 +129,7 @@ public class ProcesoConcreto extends ProcesoCompra {
             entrada.close();
         }
         catch(Exception e){
-            System.out.println("Fallo");
+            System.out.println("Fallo al leer el archivo pedido");
             e.printStackTrace();
         }
 
@@ -103,7 +138,7 @@ public class ProcesoConcreto extends ProcesoCompra {
 
 
     @Override
-    public void guardarArchivo(Pedido pedido){
+    public void guardarPedido(Pedido pedido){
 
         try{
             FileOutputStream fileOut = new FileOutputStream("pedido.obj");
@@ -113,7 +148,7 @@ public class ProcesoConcreto extends ProcesoCompra {
             salida.close();
         }
         catch(Exception e){
-            System.out.println("Fallo");
+            System.out.println("Fallo al guardar el archivo pedido");
             e.printStackTrace();
         }
     }
@@ -128,7 +163,7 @@ public class ProcesoConcreto extends ProcesoCompra {
 
         pedido.setCodigoPelicula(codigoPelicula);
 
-        guardarArchivo(pedido);
+        guardarPedido(pedido);
 
     }
 
@@ -136,7 +171,7 @@ public class ProcesoConcreto extends ProcesoCompra {
     @Override
     public List<Funcion> funcionesPorPeliculaAndFecha(){
 
-        Pedido pedido = leerArchivo();
+        Pedido pedido = leerPedido();
 
         List<Funcion> funciones = procesoConcreto.funcionService.getFuncionesByPeliculaAndFecha(pedido.getCodigoPelicula(), pedido.getFechaFuncion());
 
@@ -147,7 +182,7 @@ public class ProcesoConcreto extends ProcesoCompra {
     @Override
     public List<Funcion> funcionesEnMultiplex(List<Funcion> funciones){
 
-        Pedido pedido = leerArchivo();
+        Pedido pedido = leerPedido();
 
         List<Funcion> funcionesEliminar = new ArrayList<Funcion>();
 
@@ -174,7 +209,7 @@ public class ProcesoConcreto extends ProcesoCompra {
     @Override
     public Pedido sillasParaLaFuncion(int codigoFuncion, String tipoSilla){
 
-        Pedido pedido = leerArchivo();
+        Pedido pedido = leerPedido();
 
         pedido.setTipoSilla(tipoSilla);
 
@@ -229,7 +264,7 @@ public class ProcesoConcreto extends ProcesoCompra {
     @Override
     public Pedido guardarSillas(List<SillaTM> sillasTM){
 
-        Pedido pedido = leerArchivo();
+        Pedido pedido = leerPedido();
 
         pedido.setListadoSillasTM(sillasTM);
 
@@ -240,7 +275,7 @@ public class ProcesoConcreto extends ProcesoCompra {
     @Override
     public Pedido guardarSnacks(Optional<List<SnackTM>> listSnacksTM){
 
-        Pedido pedido = leerArchivo();
+        Pedido pedido = leerPedido();
 
         if(!listSnacksTM.isEmpty()){
             List<SnackTM> snacksTM = listSnacksTM.get();
@@ -257,16 +292,16 @@ public class ProcesoConcreto extends ProcesoCompra {
     @Override
     public FacturaCompraTM generarFacturaCompra(){
 
-        Pedido pedido = leerArchivo();
+        Pedido pedido = leerPedido();
 
         FacturaCompraTM factura = new FacturaCompraTM();
 
+        Cliente cliente = leerArchivoCliente();
+        factura.setCedulaCliente(cliente.getCedulaCliente());
+        factura.setNombreCliente(cliente.getNombreCliente());
+
         Calendar calendar = Calendar.getInstance();
         Date fechaActual = new Date(calendar.getTimeInMillis());
-
-        /*factura.setCedulaCliente(pedido.getCliente().getCedulaCliente());
-
-        factura.setNombreCliente(pedido.getCliente().getNombreCliente());*/
 
         factura.setFechaFactura(fechaActual);
 
@@ -333,14 +368,15 @@ public class ProcesoConcreto extends ProcesoCompra {
 
         pedido.setFacturaCompraTM(factura);
 
-        guardarArchivo(pedido);
+        guardarPedido(pedido);
 
         return factura;
     }
 
     @Override
     public int registrarFacturaCompra(boolean puntosRedimidos){
-        Pedido pedido = leerArchivo();
+        Pedido pedido = leerPedido();
+        Cliente cliente = leerArchivoCliente();
 
         double totalPago = pedido.getFacturaCompraTM().getTotalPago();
 
@@ -348,18 +384,16 @@ public class ProcesoConcreto extends ProcesoCompra {
             totalPago -= pedido.getListadoSillasTM().get(0).getPrecioSilla();
             pedido.getFacturaCompraTM().setPuntosRedimidos(true);
             pedido.getFacturaCompraTM().setTotalPago(totalPago);
-            guardarArchivo(pedido);
-            procesoConcreto.clienteService.resetearPuntosAndFecha(10526952);
+            guardarPedido(pedido);
+            procesoConcreto.clienteService.resetearPuntosAndFecha(cliente.getCedulaCliente());
         }
 
-
-        //int cedulaCliente = pedido.getCliente().getCedulaCliente();
         Date fechaFactura = pedido.getFacturaCompraTM().getFechaFactura();
 
         List<FacturaCompra> facturas = procesoConcreto.facturaCompraService.getAll();
         int codigoFactura = facturas.size() + 1;
 
-        procesoConcreto.facturaCompraService.insertarRegistro(puntosRedimidos, totalPago, 10526952, fechaFactura);
+        procesoConcreto.facturaCompraService.insertarRegistro(puntosRedimidos, totalPago, cliente.getCedulaCliente(), fechaFactura);
 
         return codigoFactura;
 
@@ -367,19 +401,13 @@ public class ProcesoConcreto extends ProcesoCompra {
 
     @Override
     public void registrarDispoSillas(int codigoFacturaCompra){
-        Pedido pedido = leerArchivo();
+        Pedido pedido = leerPedido();
 
-
-        //int cedulaCliente = pedido.getCliente().getCedulaCliente();
-        //int codigoFacturaCompra = 0;
         boolean disponibilidadSilla = false;
         int codigoFuncion = pedido.getFuncionEscogida().getCodigoFuncion();
 
         for(int i=0; i<pedido.getListadoSillasTM().size(); i++){
             int codigoSilla = pedido.getListadoSillasTM().get(i).getCodigoSilla();
-
-            /*Optional<FacturaCompra> facturaCompra = procesoConcreto.facturaCompraService.getFacturaByClienteAndFecha(76332522, pedido.getFacturaCompraTM().getFechaFactura());
-            codigoFacturaCompra = facturaCompra.get().getCodigoFacturaCompra();*/
 
             procesoConcreto.detalleDispoSillaService.insertarRegistro(codigoSilla, codigoFuncion, codigoFacturaCompra, disponibilidadSilla);
         }
@@ -387,10 +415,10 @@ public class ProcesoConcreto extends ProcesoCompra {
 
     @Override
     public void registrarCompraSnack(int codigoFactura){
-        Pedido pedido = leerArchivo();
+        Pedido pedido = leerPedido();
 
         if(pedido.getSnacksComprados() != null){
-            //int cedulaCliente = pedido.getCliente().getCedulaCliente();
+
             for(int i=0; i<pedido.getSnacksComprados().size(); i++){
                 int codigoSnack = pedido.getSnacksComprados().get(i).getCodigoSnack();
                 int cantidadSnackComprado = pedido.getSnacksComprados().get(i).getCantidadComprada();
@@ -402,7 +430,7 @@ public class ProcesoConcreto extends ProcesoCompra {
 
     @Override
     public void modificarVentaSnack(){
-        Pedido pedido = leerArchivo();
+        Pedido pedido = leerPedido();
 
         if(pedido.getSnacksComprados() != null){
             int codigoMultiplex = pedido.getCodigoMultiplex();
@@ -421,7 +449,8 @@ public class ProcesoConcreto extends ProcesoCompra {
 
     @Override
     public void modificarPuntosCliente(){
-        Pedido pedido = leerArchivo();
+        Pedido pedido = leerPedido();
+        Cliente cliente = leerArchivoCliente();
 
         int cantidadBoletasCompradas = pedido.getListadoSillasTM().size();
         int puntosPorBoletas = 10*cantidadBoletasCompradas;
@@ -436,12 +465,11 @@ public class ProcesoConcreto extends ProcesoCompra {
             }
         }
 
-        int puntosTotales = puntosPorBoletas+puntosPorSnacks;
+        int puntosCompra = puntosPorBoletas+puntosPorSnacks;
 
-        //int cedulaCliente = pedido.getCliente().getCedulaCliente();
-        Optional<Cliente> cliente = procesoConcreto.clienteService.getByCedula(10526952);
-        int puntosCliente = cliente.get().getPuntos();
-        int puntosActuales = puntosTotales+puntosCliente;
+        int cedulaCLiente = cliente.getCedulaCliente();
+        int puntosCliente = cliente.getPuntos();
+        int puntosActuales = puntosCompra+puntosCliente;
 
         if(puntosCliente != 100){
             if(puntosActuales>=100){
@@ -450,10 +478,16 @@ public class ProcesoConcreto extends ProcesoCompra {
                 calendar.add(Calendar.MONTH, 6);
                 Date fechaCaducidadPuntos = new Date(calendar.getTimeInMillis());
 
-                procesoConcreto.clienteService.actualizarPuntosAndFecha(puntosActuales, fechaCaducidadPuntos, 10526952);
+                cliente.setPuntos(puntosActuales);
+                cliente.setFechaCaducidadPuntos(fechaCaducidadPuntos);
+                guardarArchivoCliente(cliente);
+
+                procesoConcreto.clienteService.actualizarPuntosAndFecha(puntosActuales, fechaCaducidadPuntos, cedulaCLiente);
             }
             else{
-                procesoConcreto.clienteService.actualizarPuntos(puntosActuales, 10526952);
+                cliente.setPuntos(puntosActuales);
+                guardarArchivoCliente(cliente);
+                procesoConcreto.clienteService.actualizarPuntos(puntosActuales, cedulaCLiente);
             }
         }
     }

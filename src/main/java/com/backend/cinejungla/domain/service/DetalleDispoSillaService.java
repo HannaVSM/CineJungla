@@ -14,6 +14,10 @@ public class DetalleDispoSillaService {
     @Autowired
     private DetalleDispoSillaCrudRepository detalleDispoSillaCrudRepository;
 
+    public List<DetalleDispoSilla> getDetallesDispoSillaFactura(int codigoFactura){
+        return detalleDispoSillaCrudRepository.getDetalleDispoSillaFactura(codigoFactura);
+    }
+
     public Optional<List<DetalleDispoSilla>> getSillasDisponibles(){
         return Optional.ofNullable(detalleDispoSillaCrudRepository.findByDisponibilidadSillaEquals(true));
     }

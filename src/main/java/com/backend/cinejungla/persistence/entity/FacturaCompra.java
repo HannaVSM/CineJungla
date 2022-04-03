@@ -1,6 +1,7 @@
 package com.backend.cinejungla.persistence.entity;
 
 import javax.persistence.*;
+import java.sql.Date;
 import java.util.List;
 
 @Entity
@@ -20,6 +21,9 @@ public class FacturaCompra {
 
     @Column(name = "cedula_cliente")
     private Integer cedulaCliente;
+
+    @Column(name = "fecha_factura")
+    private Date fechaFactura;
 
     @OneToMany(mappedBy = "facturaCompra")
     private List<DetalleDispoSilla> detalleDispoSillas;
@@ -62,4 +66,8 @@ public class FacturaCompra {
     public void setCedulaCliente(Integer cedulaCliente) {
         this.cedulaCliente = cedulaCliente;
     }
+
+    public Date getFechaFactura() { return fechaFactura; }
+
+    public void setFechaFactura(Date fechaFactura) { this.fechaFactura = fechaFactura; }
 }

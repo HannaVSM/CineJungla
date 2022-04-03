@@ -2,12 +2,13 @@ package com.backend.cinejungla.persistence.entity;
 
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name="cliente")
-public class Cliente {
+public class Cliente implements Serializable {
 
     @Id
     @Column (name = "cedula_cliente")

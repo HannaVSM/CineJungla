@@ -6,12 +6,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SillaService {
 
     @Autowired
     private SillaCrudRepository sillaCrudRepository;
+
+    public Optional<Silla> getSillaByCodigo(int codigoSilla){
+        return sillaCrudRepository.sillaByCodigo(codigoSilla);
+    }
 
     public List<Silla> getSillaByPrice (int precioSilla){
         return sillaCrudRepository.sillaByPrice(precioSilla);

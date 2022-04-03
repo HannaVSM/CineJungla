@@ -9,8 +9,6 @@ import java.util.List;
 
 public class Pedido implements Serializable {
 
-    private Cliente cliente;
-
     private int codigoMultiplex;
 
     private Date fechaFuncion;
@@ -31,10 +29,6 @@ public class Pedido implements Serializable {
 
 
     public Pedido(){}
-
-    public Cliente getCliente() {
-        return cliente;
-    }
 
     public int getCodigoMultiplex() {
         return codigoMultiplex;
@@ -71,8 +65,6 @@ public class Pedido implements Serializable {
     public FacturaCompraTM getFacturaCompraTM() {
         return facturaCompraTM;
     }
-
-    public void setCliente(Cliente cliente) { this.cliente = cliente; }
 
     public void setCodigoMultiplex(int codigoMultiplex) {
         this.codigoMultiplex = codigoMultiplex;

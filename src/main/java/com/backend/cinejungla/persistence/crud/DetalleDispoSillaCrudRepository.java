@@ -15,6 +15,9 @@ public interface DetalleDispoSillaCrudRepository extends CrudRepository <Detalle
     //Query Method
     List <DetalleDispoSilla> findByDisponibilidadSillaEquals(boolean disponibilidadSilla);
 
+    @Query(value = "SELECT * FROM detalle_dispo_silla WHERE codigo_factura_compra = ?", nativeQuery = true)
+    List<DetalleDispoSilla> getDetalleDispoSillaFactura(int codigoFactura);
+
     @Query(value = "SELECT * FROM detalle_dispo_silla WHERE codigo_silla = ? AND codigo_funcion = ?", nativeQuery = true)
     Optional<DetalleDispoSilla> getDetalleByCodigoSillaAndFuncion(int codigoSilla, int codigoFuncion);
 

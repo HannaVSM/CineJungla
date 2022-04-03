@@ -2,6 +2,7 @@ package com.backend.cinejungla.web.controller;
 
 import com.backend.cinejungla.domain.service.FacturaCompraService;
 import com.backend.cinejungla.persistence.entity.FacturaCompra;
+import com.backend.cinejungla.web.manejoPatrones.FachadaPatrones;
 import com.backend.cinejungla.web.procesoCompra.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -24,19 +25,16 @@ public class FacturaCompraController {
 
     @PostMapping("/seleccionarSillas")
     public void seleccionarSillas(@RequestBody List<SillaTM> sillasTM){
-        ProcesoCompra proceso = new ProcesoConcreto();
-        proceso.seleccionarSillas(sillasTM);
+        FachadaPatrones.seleccionarSillas(sillasTM);
     }
 
     @PostMapping("/seleccionarSnacks")
     public FacturaCompraTM seleccionarSnacks(@RequestBody Optional<List<SnackTM>> snacksTM){
-        ProcesoCompra proceso = new ProcesoConcreto();
-        return proceso.seleccionarSnacks(snacksTM);
+        return FachadaPatrones.seleccionarSnacks(snacksTM);
     }
 
     @GetMapping("/pagoFactura/{redimirPuntos}")
     public void pagoFactura(@PathVariable("redimirPuntos") boolean redimirPuntos){
-        ProcesoCompra proceso = new ProcesoConcreto();
-        proceso.pagarFactura(redimirPuntos);
+        FachadaPatrones.pagarFactura(redimirPuntos);
     }
 }

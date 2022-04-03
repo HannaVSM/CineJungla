@@ -1,5 +1,6 @@
 package com.backend.cinejungla.web.procesoCompra;
 
+import com.backend.cinejungla.persistence.entity.Cliente;
 import com.backend.cinejungla.persistence.entity.Funcion;
 
 import java.io.Serializable;
@@ -34,7 +35,7 @@ public abstract class ProcesoCompra implements Serializable {
         Pedido pedido = new Pedido();
         pedido = sillasParaLaFuncion(codigoFuncion, tipoSilla);
         pedido = disponibilidadSillas(pedido);
-        guardarArchivo(pedido);
+        guardarPedido(pedido);
 
         return (List<SillaTM>)pedido.getListadoSillasTM();
     }
@@ -44,7 +45,7 @@ public abstract class ProcesoCompra implements Serializable {
         Pedido pedido = new Pedido();
 
         pedido = guardarSillas(sillasTM);
-        guardarArchivo(pedido);
+        guardarPedido(pedido);
     }
 
     public FacturaCompraTM seleccionarSnacks(Optional<List<SnackTM>> snacksTM){
@@ -52,7 +53,7 @@ public abstract class ProcesoCompra implements Serializable {
         Pedido pedido = new Pedido();
 
         pedido = guardarSnacks(snacksTM);
-        guardarArchivo(pedido);
+        guardarPedido(pedido);
 
         return generarFactura();
     }
@@ -74,13 +75,14 @@ public abstract class ProcesoCompra implements Serializable {
         modificarVentaSnack();
         modificarPuntosCliente();
 
-        Pedido pedido = (Pedido)leerArchivo();
     }
 
 
+    public abstract Cliente leerArchivoCliente();
+    public abstract void guardarArchivoCliente(Cliente cliente);
     public abstract void guardarInfoBasica(Pedido pedido, int codigoMultiplex, int codigoPelicula, Date fechaFuncion);
-    public abstract Pedido leerArchivo();
-    public abstract void guardarArchivo(Pedido pedido);
+    public abstract Pedido leerPedido();
+    public abstract void guardarPedido(Pedido pedido);
     public abstract List<Funcion> funcionesPorPeliculaAndFecha();
     public abstract List<Funcion> funcionesEnMultiplex(List<Funcion> funciones);
     public abstract Pedido sillasParaLaFuncion(int codigoFuncion, String tipoSilla);
