@@ -18,6 +18,17 @@ public class Snack {
     @Column (name = "precio_unitario")
     private Double precioUnitario;
 
+    @Column (name = "direccion_imagen")
+    private String direccionImagen;
+
+    public String getDireccionImagen() {
+        return direccionImagen;
+    }
+
+    public void setDireccionImagen(String direccionImagen) {
+        this.direccionImagen = direccionImagen;
+    }
+
     @OneToMany(mappedBy = "snack")
     private List<CompraSnack> compraSnacks;
 

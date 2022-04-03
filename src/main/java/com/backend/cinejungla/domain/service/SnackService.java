@@ -14,7 +14,7 @@ public class SnackService {
     @Autowired
     private SnackCrudRepository snackCrudRepository;
 
-    public List <Snack> getAll(){return (List<Snack>) snackCrudRepository.getAll();}
+    public List <Snack> getAll(){return (List<Snack>) snackCrudRepository.findAll();}
 
     public Optional<Snack> getSnackByCodigo(int codigoSnack){return (Optional<Snack>) snackCrudRepository.getSnackByCodigo(codigoSnack);}
 }
