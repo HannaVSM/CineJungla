@@ -23,12 +23,12 @@ public class FacturaCompraController {
         return facturaCompraService.getFacturasCliente(cedulaCliente);
     }
 
-    @GetMapping("/seleccionarSillas")
+    @PostMapping("/seleccionarSillas")
     public void seleccionarSillas(@RequestBody List<SillaTM> sillasTM){
         FachadaPatrones.seleccionarSillas(sillasTM);
     }
 
-    @GetMapping("/seleccionarSnacks")
+    @PostMapping("/seleccionarSnacks")
     public FacturaCompraTM seleccionarSnacks(@RequestBody Optional<List<SnackTM>> snacksTM){
         return FachadaPatrones.seleccionarSnacks(snacksTM);
     }

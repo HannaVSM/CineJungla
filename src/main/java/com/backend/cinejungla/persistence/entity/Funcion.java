@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Date;
 import java.sql.Time;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -19,7 +20,7 @@ public class Funcion implements Serializable {
   private Date fechaFuncion;
 
   @Column (name = "hora_funcion")
-  private Time horaFuncion;
+  private LocalDateTime horaFuncion;
 
   @Column(name = "codigo_pelicula")
   private Integer codigoPelicula;
@@ -58,11 +59,11 @@ public class Funcion implements Serializable {
     return fechaFuncion;
   }
 
-  public Time getHoraFuncion() {
+  public LocalDateTime getHoraFuncion() {
     return horaFuncion;
   }
 
-  public void setHoraFuncion(Time horaFuncion) {
+  public void setHoraFuncion(LocalDateTime horaFuncion) {
     this.horaFuncion = horaFuncion;
   }
 

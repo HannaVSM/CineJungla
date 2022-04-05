@@ -3,6 +3,7 @@ package com.backend.cinejungla.web.procesoCompra;
 import java.io.Serializable;
 import java.sql.Date;
 import java.sql.Time;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class FacturaCompraTM implements Serializable {
 
     private Date fechaFuncion;
 
-    private Time horaFuncion;
+    private LocalDateTime horaFuncion;
 
     private String tipoFuncion;
 
@@ -67,7 +68,7 @@ public class FacturaCompraTM implements Serializable {
         return fechaFuncion;
     }
 
-    public Time getHoraFuncion() {
+    public LocalDateTime getHoraFuncion() {
         return horaFuncion;
     }
 
@@ -131,7 +132,7 @@ public class FacturaCompraTM implements Serializable {
         this.fechaFuncion = fechaFuncion;
     }
 
-    public void setHoraFuncion(Time horaFuncion) {
+    public void setHoraFuncion(LocalDateTime horaFuncion) {
         this.horaFuncion = horaFuncion;
     }
 
