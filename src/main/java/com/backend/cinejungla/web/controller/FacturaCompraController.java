@@ -29,8 +29,13 @@ public class FacturaCompraController {
     }
 
     @PostMapping("/seleccionarSnacks")
-    public FacturaCompraTM seleccionarSnacks(@RequestBody Optional<List<SnackTM>> snacksTM){
-        return FachadaPatrones.seleccionarSnacks(snacksTM);
+    public void seleccionarSnacks(@RequestBody Optional<List<SnackTM>> snacksTM){
+        FachadaPatrones.seleccionarSnacks(snacksTM);
+    }
+
+    @GetMapping("/generarFactura")
+    public FacturaCompraTM generarFactura(){
+        return FachadaPatrones.generarFactura();
     }
 
     @GetMapping("/posibilidadRedimirPuntos")

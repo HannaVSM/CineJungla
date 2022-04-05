@@ -28,9 +28,14 @@ public class FachadaPatrones {
         procesoCompra.seleccionarSillas(sillasTM);
     }
 
-    public static FacturaCompraTM seleccionarSnacks(Optional<List<SnackTM>> snacksTM){
+    public static void seleccionarSnacks(Optional<List<SnackTM>> snacksTM){
 
-        return procesoCompra.seleccionarSnacks(snacksTM);
+        procesoCompra.seleccionarSnacks(snacksTM);
+    }
+
+    public static FacturaCompraTM generarFactura(){
+
+        return procesoCompra.generarFactura();
     }
 
     public static boolean posibilidadRedimirPuntos(){
