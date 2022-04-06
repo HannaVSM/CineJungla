@@ -213,7 +213,7 @@ public class ProcesoConcreto extends ProcesoCompra {
 
     //Escogida una funcion, se traen todas las sillas de la sala donde se proyecta la funcion, filtrandolas por el tipo de silla escogido
     @Override
-    public Pedido sillasParaLaFuncion(int codigoFuncion, String tipoSilla){
+    public void sillasParaLaFuncion(int codigoFuncion, String tipoSilla){
 
         Pedido pedido = leerPedido();
 
@@ -228,12 +228,14 @@ public class ProcesoConcreto extends ProcesoCompra {
 
         pedido.setListadoSillas(sillas);
 
-        return pedido;
+        guardarPedido(pedido);
     }
 
     //De las sillas del paso tres, se mira cuales estan ocupadas y cuales no
     @Override
-    public Pedido disponibilidadSillas(Pedido pedido){
+    public void disponibilidadSillas(){
+
+        Pedido pedido = leerPedido();
 
         List<SillaTM> sillasTM = new ArrayList<SillaTM>();
 
@@ -263,23 +265,23 @@ public class ProcesoConcreto extends ProcesoCompra {
 
         pedido.setListadoSillasTM(sillasTM);
 
-        return pedido;
+        guardarPedido(pedido);
     }
 
     //Se guardan las sillas escogidas y los snacks comprados
     @Override
-    public Pedido guardarSillas(List<SillaTM> sillasTM){
+    public void guardarSillas(List<SillaTM> sillasTM){
 
         Pedido pedido = leerPedido();
 
         pedido.setListadoSillasTM(sillasTM);
 
-        return pedido;
+        guardarPedido(pedido);
     }
 
     //Se guardan los snacks comprados
     @Override
-    public Pedido guardarSnacks(Optional<List<SnackTM>> listSnacksTM){
+    public void guardarSnacks(Optional<List<SnackTM>> listSnacksTM){
 
         Pedido pedido = leerPedido();
 
@@ -292,7 +294,7 @@ public class ProcesoConcreto extends ProcesoCompra {
             pedido.setSnacksComprados(null);
         }
 
-        return pedido;
+        guardarPedido(pedido);
     }
 
 

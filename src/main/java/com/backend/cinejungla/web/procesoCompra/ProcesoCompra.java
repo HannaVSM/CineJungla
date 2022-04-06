@@ -32,30 +32,21 @@ public abstract class ProcesoCompra implements Serializable {
 
     //Se hacen los filtros  para encontrar las sillas generales o preferenciales para la funcion escogida
     public List<SillaTM> consultarSillasFuncion(int codigoFuncion, String tipoSilla){
-        Pedido pedido = new Pedido();
-        pedido = sillasParaLaFuncion(codigoFuncion, tipoSilla);
-        pedido = disponibilidadSillas(pedido);
-        guardarPedido(pedido);
 
-        return (List<SillaTM>)pedido.getListadoSillasTM();
+        sillasParaLaFuncion(codigoFuncion, tipoSilla);
+        disponibilidadSillas();
+
+        return (List<SillaTM>)leerPedido().getListadoSillasTM();
     }
 
     public void seleccionarSillas(List<SillaTM> sillasTM){
 
-        Pedido pedido = new Pedido();
-
-        pedido = guardarSillas(sillasTM);
-        guardarPedido(pedido);
+        guardarSillas(sillasTM);
     }
 
-    public FacturaCompraTM seleccionarSnacks(Optional<List<SnackTM>> snacksTM){
+    public void seleccionarSnacks(Optional<List<SnackTM>> snacksTM){
 
-        Pedido pedido = new Pedido();
-
-        pedido = guardarSnacks(snacksTM);
-        guardarPedido(pedido);
-
-        return generarFactura();
+        guardarSnacks(snacksTM);
     }
 
 
@@ -75,9 +66,7 @@ public abstract class ProcesoCompra implements Serializable {
         registrarCompraSnack(codigoFacturaCompra);
         modificarVentaSnack();
         modificarPuntosCliente();
-
     }
-
 
     public abstract Cliente leerArchivoCliente();
     public abstract void guardarArchivoCliente(Cliente cliente);
@@ -86,10 +75,10 @@ public abstract class ProcesoCompra implements Serializable {
     public abstract void guardarPedido(Pedido pedido);
     public abstract List<Funcion> funcionesPorPeliculaAndFecha();
     public abstract List<Funcion> funcionesEnMultiplex(List<Funcion> funciones);
-    public abstract Pedido sillasParaLaFuncion(int codigoFuncion, String tipoSilla);
-    public abstract Pedido disponibilidadSillas(Pedido pedido);
-    public abstract Pedido guardarSillas(List<SillaTM> sillasTM);
-    public abstract Pedido guardarSnacks(Optional<List<SnackTM>> snacksTM);
+    public abstract void sillasParaLaFuncion(int codigoFuncion, String tipoSilla);
+    public abstract void disponibilidadSillas();
+    public abstract void guardarSillas(List<SillaTM> sillasTM);
+    public abstract void guardarSnacks(Optional<List<SnackTM>> snacksTM);
     public abstract boolean posibilidadRedimirPuntos();
     public abstract FacturaCompraTM generarFacturaCompra();
     public abstract int registrarFacturaCompra(boolean puntosRedimidos);
