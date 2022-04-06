@@ -48,12 +48,14 @@ public abstract class ProcesoCompra implements Serializable {
         guardarPedido(pedido);
     }
 
-    public void seleccionarSnacks(Optional<List<SnackTM>> snacksTM){
+    public FacturaCompraTM seleccionarSnacks(Optional<List<SnackTM>> snacksTM){
 
         Pedido pedido = new Pedido();
 
         pedido = guardarSnacks(snacksTM);
         guardarPedido(pedido);
+
+        return generarFactura();
     }
 
 
@@ -73,7 +75,9 @@ public abstract class ProcesoCompra implements Serializable {
         registrarCompraSnack(codigoFacturaCompra);
         modificarVentaSnack();
         modificarPuntosCliente();
+
     }
+
 
     public abstract Cliente leerArchivoCliente();
     public abstract void guardarArchivoCliente(Cliente cliente);

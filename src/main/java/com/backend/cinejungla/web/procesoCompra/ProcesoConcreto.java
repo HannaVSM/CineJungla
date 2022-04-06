@@ -92,6 +92,7 @@ public class ProcesoConcreto extends ProcesoCompra {
 
             cliente = (Cliente)entrada.readObject();
             entrada.close();
+            fileIn.close();
         }
         catch(Exception e){
             System.out.println("Fallo al leer el archivo cliente");
@@ -108,7 +109,9 @@ public class ProcesoConcreto extends ProcesoCompra {
             ObjectOutputStream salida = new ObjectOutputStream(fileOut);
 
             salida.writeObject(cliente);
+            salida.flush();
             salida.close();
+            fileOut.close();
         }
         catch(Exception e){
             System.out.println("Fallo al guardar del archivo cliente");
@@ -127,6 +130,7 @@ public class ProcesoConcreto extends ProcesoCompra {
 
             pedido = (Pedido)entrada.readObject();
             entrada.close();
+            fileIn.close();
         }
         catch(Exception e){
             System.out.println("Fallo al leer el archivo pedido");
@@ -145,7 +149,9 @@ public class ProcesoConcreto extends ProcesoCompra {
             ObjectOutputStream salida = new ObjectOutputStream(fileOut);
 
             salida.writeObject(pedido);
+            salida.flush();
             salida.close();
+            fileOut.close();
         }
         catch(Exception e){
             System.out.println("Fallo al guardar el archivo pedido");
@@ -288,6 +294,8 @@ public class ProcesoConcreto extends ProcesoCompra {
 
         return pedido;
     }
+
+
 
     @Override
     public FacturaCompraTM generarFacturaCompra(){
