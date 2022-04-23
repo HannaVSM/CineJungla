@@ -1,11 +1,8 @@
 package com.backend.cinejungla.web.controller;
 
 import com.backend.cinejungla.domain.service.SillaService;
-import com.backend.cinejungla.persistence.crud.SillaCrudRepository;
 import com.backend.cinejungla.persistence.entity.Silla;
 import com.backend.cinejungla.web.manejoPatrones.FachadaPatrones;
-import com.backend.cinejungla.web.procesoCompra.ProcesoCompra;
-import com.backend.cinejungla.web.procesoCompra.ProcesoConcreto;
 import com.backend.cinejungla.web.procesoCompra.SillaTM;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -38,4 +35,5 @@ public class SillaController {
     public List<SillaTM> getSillasParaUnaFuncion (@PathVariable("codigoFuncion") int codigoFuncion, @PathVariable("tipoSilla") String tipoSilla){
         return FachadaPatrones.consultarSillasFuncion(codigoFuncion, tipoSilla);
     }
+
 }

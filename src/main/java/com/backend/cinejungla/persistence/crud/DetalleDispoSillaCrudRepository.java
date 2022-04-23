@@ -7,7 +7,6 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 import javax.transaction.Transactional;
-import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 

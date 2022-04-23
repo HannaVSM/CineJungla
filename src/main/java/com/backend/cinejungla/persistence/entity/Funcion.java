@@ -3,7 +3,6 @@ package com.backend.cinejungla.persistence.entity;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Date;
-import java.sql.Time;
 import java.time.LocalDateTime;
 import java.util.List;
 

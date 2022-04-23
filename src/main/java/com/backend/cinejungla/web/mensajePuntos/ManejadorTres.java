@@ -1,7 +1,5 @@
 package com.backend.cinejungla.web.mensajePuntos;
 
-import com.backend.cinejungla.persistence.entity.Cliente;
-
 public class ManejadorTres extends ManejadorPuntos{
 
     @Override

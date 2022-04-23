@@ -105,6 +105,21 @@ public class ProcesoConcreto extends ProcesoCompra {
     @Override
     public void guardarArchivoCliente(Cliente cliente){
         try{
+            File fichero = new File("cliente.obj");
+
+            if(fichero.exists()){
+                System.out.println("El fichero de cliente ya esta creado");
+                fichero.delete();
+                System.out.println("Se ha eliminado el fichero de cliente para guardar nuevamente el cliente");
+            }
+            else{
+                if(fichero.createNewFile()){
+                    System.out.println("Se ha creado el fichero de cliente correctamente");
+                }
+                else{
+                    System.out.println("Error al crear el fichero de cliente");
+                }
+            }
             FileOutputStream fileOut = new FileOutputStream("cliente.obj");
             ObjectOutputStream salida = new ObjectOutputStream(fileOut);
 
@@ -120,66 +135,18 @@ public class ProcesoConcreto extends ProcesoCompra {
     }
 
     @Override
-    public Pedido leerPedido(){
-        Pedido pedido = new Pedido();
+    public void guardarInfoBasica(int codigoMultiplex, int codigoPelicula){
 
-        try{
-
-            FileInputStream fileIn = new FileInputStream("pedido.obj");
-            ObjectInputStream entrada = new ObjectInputStream(fileIn);
-
-            pedido = (Pedido)entrada.readObject();
-            entrada.close();
-            fileIn.close();
-        }
-        catch(Exception e){
-            System.out.println("Fallo al leer el archivo pedido");
-            e.printStackTrace();
-        }
-
-        return pedido;
-    }
-
-
-    @Override
-    public void guardarPedido(Pedido pedido){
-
-        try{
-            FileOutputStream fileOut = new FileOutputStream("pedido.obj");
-            ObjectOutputStream salida = new ObjectOutputStream(fileOut);
-
-            salida.writeObject(pedido);
-            salida.flush();
-            salida.close();
-            fileOut.close();
-        }
-        catch(Exception e){
-            System.out.println("Fallo al guardar el archivo pedido");
-            e.printStackTrace();
-        }
-    }
-
-    //Esto también será innecesario
-    @Override
-    public void guardarInfoBasica(Pedido pedido, int codigoMultiplex, int codigoPelicula, Date fechaFuncion){
-
-        pedido.setFechaFuncion(fechaFuncion);
-
-        pedido.setCodigoMultiplex(codigoMultiplex);
-
-        pedido.setCodigoPelicula(codigoPelicula);
-
-        guardarPedido(pedido);
-
+        insertarPedido(codigoMultiplex, codigoPelicula);
     }
 
     //Se obtienen las funciones que cumplen con la pelicula y la fecha escogida
     @Override
-    public List<Funcion> funcionesPorPeliculaAndFecha(){
+    public List<Funcion> funcionesPorPeliculaAndFecha(Date fechaFuncion){
 
-        Pedido pedido = leerPedido();
+        Pedido pedido = consultarPedido();
 
-        List<Funcion> funciones = procesoConcreto.funcionService.getFuncionesByPeliculaAndFecha(pedido.getCodigoPelicula(), pedido.getFechaFuncion());
+        List<Funcion> funciones = procesoConcreto.funcionService.getFuncionesByPeliculaAndFecha(pedido.getCodigoPelicula(), fechaFuncion);
 
         return funciones;
     }
@@ -188,7 +155,7 @@ public class ProcesoConcreto extends ProcesoCompra {
     @Override
     public List<Funcion> funcionesEnMultiplex(List<Funcion> funciones){
 
-        Pedido pedido = leerPedido();
+        Pedido pedido = consultarPedido();
 
         List<Funcion> funcionesEliminar = new ArrayList<Funcion>();
 
@@ -213,33 +180,29 @@ public class ProcesoConcreto extends ProcesoCompra {
 
     //Escogida una funcion, se traen todas las sillas de la sala donde se proyecta la funcion, filtrandolas por el tipo de silla escogido
     @Override
-    public void sillasParaLaFuncion(int codigoFuncion, String tipoSilla){
+    public List<Silla> sillasParaLaFuncion(int codigoFuncion, String tipoSilla){
 
-        Pedido pedido = leerPedido();
-
+        Pedido pedido = consultarPedido();
         pedido.setTipoSilla(tipoSilla);
 
         Optional<Funcion> funcionEscogida = procesoConcreto.funcionService.getFuncionByCodigo(codigoFuncion);
-        pedido.setFuncionEscogida(funcionEscogida.get());
+        actualizarPedido(codigoFuncion, tipoSilla);
 
         int codigoSala = funcionEscogida.get().getCodigoSala();
 
         List<Silla> sillas = procesoConcreto.sillaService.getSillasByCodigoSalaAndTipo(codigoSala, tipoSilla);
 
-        pedido.setListadoSillas(sillas);
+        return sillas;
 
-        guardarPedido(pedido);
     }
 
     //De las sillas del paso tres, se mira cuales estan ocupadas y cuales no
     @Override
-    public void disponibilidadSillas(){
+    public List<SillaTM> disponibilidadSillas(List<Silla> sillas){
 
-        Pedido pedido = leerPedido();
+        Pedido pedido = consultarPedido();
 
         List<SillaTM> sillasTM = new ArrayList<SillaTM>();
-
-        List<Silla> sillas = pedido.getListadoSillas();
 
         for(int i=0; i<sillas.size(); i++){
 
@@ -251,7 +214,7 @@ public class ProcesoConcreto extends ProcesoCompra {
             sillaTM.setCodigoSala(sillas.get(i).getCodigoSala());
 
             int codigoSilla = sillas.get(i).getCodigoSilla();
-            int codigoFuncion = pedido.getFuncionEscogida().getCodigoFuncion();
+            int codigoFuncion = pedido.getCodigoFuncion();
             Optional<DetalleDispoSilla> detalleSilla = procesoConcreto.detalleDispoSillaService.getDetalleByCodigoSillaAndFuncion(codigoSilla, codigoFuncion);
 
             if(detalleSilla.isEmpty()){
@@ -263,38 +226,48 @@ public class ProcesoConcreto extends ProcesoCompra {
             sillasTM.add(sillaTM);
         }
 
-        pedido.setListadoSillasTM(sillasTM);
-
-        guardarPedido(pedido);
+        return sillasTM;
     }
 
-    //Se guardan las sillas escogidas y los snacks comprados
+    //Se guardan las sillas escogidas
     @Override
     public void guardarSillas(List<SillaTM> sillasTM){
 
-        Pedido pedido = leerPedido();
+        Pedido pedido = consultarPedido();
 
-        pedido.setListadoSillasTM(sillasTM);
+        eliminarDetDispoSillaTemp(pedido.getCodigoPedido());
 
-        guardarPedido(pedido);
+        for(int i=0; i<sillasTM.size(); i++){
+            int codigoSilla = sillasTM.get(i).getCodigoSilla();
+            int codigoFuncion = pedido.getCodigoFuncion();
+            int codigoPedido = pedido.getCodigoPedido();
+            boolean dispoSilla = false;
+
+            insertarDetDispoSillaTemp(codigoSilla, codigoFuncion, codigoPedido, dispoSilla);
+        }
     }
+
+
 
     //Se guardan los snacks comprados
     @Override
     public void guardarSnacks(Optional<List<SnackTM>> listSnacksTM){
 
-        Pedido pedido = leerPedido();
+        Pedido pedido = consultarPedido();
+
+        eliminarCompraSnackTemp(pedido.getCodigoPedido());
 
         if(!listSnacksTM.isEmpty()){
             List<SnackTM> snacksTM = listSnacksTM.get();
 
-            pedido.setSnacksComprados(snacksTM);
-        }
-        else{
-            pedido.setSnacksComprados(null);
-        }
+            for(int i=0; i<snacksTM.size(); i++){
+                int codigoSnack = snacksTM.get(i).getCodigoSnack();
+                int codigoPedido = pedido.getCodigoPedido();
+                int cantidadComprada = snacksTM.get(i).getCantidadComprada();
 
-        guardarPedido(pedido);
+                insertarCompraSnackTemp(codigoSnack, codigoPedido, cantidadComprada);
+            }
+        }
     }
 
 
@@ -302,7 +275,7 @@ public class ProcesoConcreto extends ProcesoCompra {
     @Override
     public FacturaCompraTM generarFacturaCompra(){
 
-        Pedido pedido = leerPedido();
+        Pedido pedido = consultarPedido();
 
         FacturaCompraTM factura = new FacturaCompraTM();
 
@@ -312,7 +285,6 @@ public class ProcesoConcreto extends ProcesoCompra {
 
         Calendar calendar = Calendar.getInstance();
         Date fechaActual = new Date(calendar.getTimeInMillis());
-
         factura.setFechaFactura(fechaActual);
 
         Optional<Multiplex> multiplex = procesoConcreto.multiplexService.getMultiplexbyCodigo(pedido.getCodigoMultiplex());
@@ -321,9 +293,10 @@ public class ProcesoConcreto extends ProcesoCompra {
         Optional<Pelicula> pelicula = procesoConcreto.peliculaService.getPeliculaByCodigo(pedido.getCodigoPelicula());
         factura.setPelicula(pelicula.get().getNombrePelicula());
 
-        Funcion funcionEscogida = pedido.getFuncionEscogida();
+        Optional<Funcion> funcion = procesoConcreto.funcionService.getFuncionByCodigo(pedido.getCodigoFuncion());
+        Funcion funcionEscogida = funcion.get();
 
-        factura.setFechaFuncion(pedido.getFechaFuncion());
+        factura.setFechaFuncion(funcionEscogida.getFechaFuncion());
 
         factura.setHoraFuncion(funcionEscogida.getHoraFuncion());
 
@@ -335,31 +308,42 @@ public class ProcesoConcreto extends ProcesoCompra {
 
         factura.setNombreSala(sala.get().getNombreSala());
 
-        List<String> sillas = new ArrayList<String>();
-        for(int i=0; i<pedido.getListadoSillasTM().size(); i++){
-            sillas.add(pedido.getListadoSillasTM().get(i).getUbicacionSilla());
+        List<DetalleDispoSillaTemp> sillasTemp = getDetDispoSillaTemp();
+        List<String> sillasEscogidas = new ArrayList<String>();
+        for(int i=0; i<sillasTemp.size(); i++){
+            Optional<Silla> silla = procesoConcreto.sillaService.getSillaByCodigo(sillasTemp.get(i).getCodigoSilla());
+            sillasEscogidas.add(silla.get().getUbicacionSilla());
         }
-        factura.setSillas(sillas);
+        factura.setSillas(sillasEscogidas);
 
-        int precioSillaUnitaria = pedido.getListadoSillasTM().get(0).getPrecioSilla();
-        int precioSillas = (pedido.getListadoSillasTM().size())*precioSillaUnitaria;
+        Optional<Silla> silla = procesoConcreto.sillaService.getSillaByCodigo(sillasTemp.get(0).getCodigoSilla());
+        int precioSillaUnitaria = silla.get().getPrecioSilla();
+        int precioSillas = (sillasTemp.size())*precioSillaUnitaria;
         factura.setPrecioSillas(precioSillas);
 
-        if(pedido.getSnacksComprados() != null){
+        List<CompraSnackTemp> snacksTemp = getCompraSnackTemp();
+        if(snacksTemp.size() != 0){
 
-            List<SnackTM> snacks = new ArrayList<SnackTM>();
-            for(int i=0; i<pedido.getSnacksComprados().size(); i++){
-                snacks.add(pedido.getSnacksComprados().get(i));
+            List<SnackTM> snacksTM = new ArrayList<SnackTM>();
+            for(int i=0; i<snacksTemp.size(); i++){
+                SnackTM snackTM = new SnackTM();
+                snackTM.setCodigoSnack(snacksTemp.get(i).getCodigoSnack());
+                Optional<Snack> snack = procesoConcreto.snackService.getSnackByCodigo(snacksTemp.get(i).getCodigoSnack());
+                snackTM.setNombreSnack(snack.get().getNombreSnack());
+                snackTM.setPrecioUnitario(snack.get().getPrecioUnitario());
+                snackTM.setCantidadComprada(snacksTemp.get(i).getCantidadSnackComprado());
+                snacksTM.add(snackTM);
             }
-            factura.setSnacksComprados(snacks);
+            factura.setSnacksComprados(snacksTM);
 
             double precioSnacks = 0;
 
-            for(int i=0; i<pedido.getSnacksComprados().size(); i++){
+            for(int i=0; i<snacksTemp.size(); i++){
 
-                double precioSnackUnitario = pedido.getSnacksComprados().get(i).getPrecioUnitario();
+                Optional<Snack> snack = procesoConcreto.snackService.getSnackByCodigo(snacksTemp.get(i).getCodigoSnack());
+                double precioSnackUnitario = snack.get().getPrecioUnitario();
 
-                int cantidadSnack = pedido.getSnacksComprados().get(i).getCantidadComprada();
+                int cantidadSnack = snacksTemp.get(i).getCantidadSnackComprado();
 
                 precioSnacks += precioSnackUnitario*cantidadSnack;
             }
@@ -376,9 +360,7 @@ public class ProcesoConcreto extends ProcesoCompra {
             factura.setTotalPago((double)precioSillas);
         }
 
-        pedido.setFacturaCompraTM(factura);
-
-        guardarPedido(pedido);
+        Pedido.setFacturaCompraTM(factura);
 
         return factura;
     }
@@ -386,7 +368,7 @@ public class ProcesoConcreto extends ProcesoCompra {
     @Override
     public boolean posibilidadRedimirPuntos(){
         Cliente cliente = leerArchivoCliente();
-        Pedido pedido = leerPedido();
+        Pedido pedido = consultarPedido();
 
         boolean poderRedimirPuntos = false;
 
@@ -402,16 +384,16 @@ public class ProcesoConcreto extends ProcesoCompra {
 
     @Override
     public int registrarFacturaCompra(boolean puntosRedimidos){
-        Pedido pedido = leerPedido();
+        Pedido pedido = consultarPedido();
         Cliente cliente = leerArchivoCliente();
 
-        double totalPago = pedido.getFacturaCompraTM().getTotalPago();
+        double totalPago = Pedido.getFacturaCompraTM().getTotalPago();
 
         if(puntosRedimidos ^ pedido.getTipoSilla()=="general"){
-            totalPago -= pedido.getListadoSillasTM().get(0).getPrecioSilla();
-            pedido.getFacturaCompraTM().setPuntosRedimidos(true);
-            pedido.getFacturaCompraTM().setTotalPago(totalPago);
-            guardarPedido(pedido);
+            Optional<Silla> silla = procesoConcreto.sillaService.getSillaByCodigo(getDetDispoSillaTemp().get(0).getCodigoSilla());
+            totalPago -= silla.get().getPrecioSilla();
+            Pedido.getFacturaCompraTM().setPuntosRedimidos(true);
+            Pedido.getFacturaCompraTM().setTotalPago(totalPago);
             procesoConcreto.clienteService.resetearPuntosAndFecha(cliente.getCedulaCliente());
         }
 
@@ -423,18 +405,19 @@ public class ProcesoConcreto extends ProcesoCompra {
         procesoConcreto.facturaCompraService.insertarRegistro(puntosRedimidos, totalPago, cliente.getCedulaCliente(), fechaFactura);
 
         return codigoFactura;
-
     }
+
+
 
     @Override
     public void registrarDispoSillas(int codigoFacturaCompra){
-        Pedido pedido = leerPedido();
+        Pedido pedido = consultarPedido();
 
         boolean disponibilidadSilla = false;
-        int codigoFuncion = pedido.getFuncionEscogida().getCodigoFuncion();
+        int codigoFuncion = pedido.getCodigoFuncion();
 
-        for(int i=0; i<pedido.getListadoSillasTM().size(); i++){
-            int codigoSilla = pedido.getListadoSillasTM().get(i).getCodigoSilla();
+        for(int i=0; i<getDetDispoSillaTemp().size(); i++){
+            int codigoSilla = getDetDispoSillaTemp().get(i).getCodigoSilla();
 
             procesoConcreto.detalleDispoSillaService.insertarRegistro(codigoSilla, codigoFuncion, codigoFacturaCompra, disponibilidadSilla);
         }
@@ -442,13 +425,15 @@ public class ProcesoConcreto extends ProcesoCompra {
 
     @Override
     public void registrarCompraSnack(int codigoFactura){
-        Pedido pedido = leerPedido();
+        Pedido pedido = consultarPedido();
 
-        if(pedido.getSnacksComprados() != null){
+        List<CompraSnackTemp> snacksTemp = getCompraSnackTemp();
 
-            for(int i=0; i<pedido.getSnacksComprados().size(); i++){
-                int codigoSnack = pedido.getSnacksComprados().get(i).getCodigoSnack();
-                int cantidadSnackComprado = pedido.getSnacksComprados().get(i).getCantidadComprada();
+        if(snacksTemp.size() != 0){
+
+            for(int i=0; i<snacksTemp.size(); i++){
+                int codigoSnack = snacksTemp.get(i).getCodigoSnack();
+                int cantidadSnackComprado = snacksTemp.get(i).getCantidadSnackComprado();
 
                 procesoConcreto.compraSnackService.insertarResgistro(codigoSnack, codigoFactura, cantidadSnackComprado);
             }
@@ -457,17 +442,19 @@ public class ProcesoConcreto extends ProcesoCompra {
 
     @Override
     public void modificarVentaSnack(){
-        Pedido pedido = leerPedido();
+        Pedido pedido = consultarPedido();
 
-        if(pedido.getSnacksComprados() != null){
+        List<CompraSnackTemp> snacksTemp = getCompraSnackTemp();
+
+        if(snacksTemp.size() != 0){
             int codigoMultiplex = pedido.getCodigoMultiplex();
 
-            for(int i=0; i<pedido.getSnacksComprados().size(); i++){
-                int codigoSnack = pedido.getSnacksComprados().get(i).getCodigoSnack();
+            for(int i=0; i<snacksTemp.size(); i++){
+                int codigoSnack = snacksTemp.get(i).getCodigoSnack();
                 Optional<VentaSnack> ventaSnack = procesoConcreto.ventaSnackService.getByCodigoMultiplexAndSnack(codigoMultiplex, codigoSnack);
                 int stockActual = ventaSnack.get().getStockActual();
 
-                int stockNuevo = stockActual - pedido.getSnacksComprados().get(i).getCantidadComprada();
+                int stockNuevo = stockActual - snacksTemp.get(i).getCantidadSnackComprado();
 
                 procesoConcreto.ventaSnackService.actualizarVentaSnack(stockNuevo, codigoMultiplex, codigoSnack);
             }
@@ -476,18 +463,20 @@ public class ProcesoConcreto extends ProcesoCompra {
 
     @Override
     public void modificarPuntosCliente(){
-        Pedido pedido = leerPedido();
+        Pedido pedido = consultarPedido();
         Cliente cliente = leerArchivoCliente();
 
-        int cantidadBoletasCompradas = pedido.getListadoSillasTM().size();
+        int cantidadBoletasCompradas = getDetDispoSillaTemp().size();
         int puntosPorBoletas = 10*cantidadBoletasCompradas;
 
         int puntosPorSnacks = 0;
 
-        if(pedido.getSnacksComprados() != null){
+        List<CompraSnackTemp> snacksTemp = getCompraSnackTemp();
 
-            for(int i=0; i<pedido.getSnacksComprados().size(); i++){
-                int cantidadSnackComprado = pedido.getSnacksComprados().get(i).getCantidadComprada();
+        if(snacksTemp.size() != 0){
+
+            for(int i=0; i<snacksTemp.size(); i++){
+                int cantidadSnackComprado = snacksTemp.get(i).getCantidadSnackComprado();
                 puntosPorSnacks += 5*cantidadSnackComprado;
             }
         }
@@ -518,4 +507,5 @@ public class ProcesoConcreto extends ProcesoCompra {
             }
         }
     }
+
 }

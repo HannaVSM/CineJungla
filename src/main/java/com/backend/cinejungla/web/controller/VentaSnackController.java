@@ -1,7 +1,6 @@
 package com.backend.cinejungla.web.controller;
 
 import com.backend.cinejungla.domain.service.VentaSnackService;
-import com.backend.cinejungla.persistence.crud.VentaSnackCrudRepository;
 import com.backend.cinejungla.persistence.entity.VentaSnack;
 import com.backend.cinejungla.web.procesoCompra.SnackTM;
 import org.springframework.beans.factory.annotation.Autowired;

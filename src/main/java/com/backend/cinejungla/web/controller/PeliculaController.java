@@ -1,6 +1,5 @@
 package com.backend.cinejungla.web.controller;
 
-import com.backend.cinejungla.domain.service.PeliculaEnMultiplexService;
 import com.backend.cinejungla.domain.service.PeliculaService;
 import com.backend.cinejungla.persistence.entity.Pelicula;
 import org.springframework.beans.factory.annotation.Autowired;

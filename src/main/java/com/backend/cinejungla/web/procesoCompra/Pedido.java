@@ -1,104 +1,70 @@
 package com.backend.cinejungla.web.procesoCompra;
 
 
-import com.backend.cinejungla.persistence.entity.*;
 import java.io.Serializable;
-import java.sql.Date;
-import java.util.List;
 
 
 public class Pedido implements Serializable {
 
-    private int codigoMultiplex;
+    private int codigoPedido;
 
-    private Date fechaFuncion;
+    private int codigoMultiplex;
 
     private int codigoPelicula;
 
-    private Funcion funcionEscogida;
+    private int codigoFuncion;
 
     private String tipoSilla;
 
-    private List<Silla> listadoSillas;
-
-    private List<SillaTM> listadoSillasTM;
-
-    private List<SnackTM> snacksComprados;
-
-    private FacturaCompraTM facturaCompraTM;
-
+    private static FacturaCompraTM facturaCompraTM;
 
     public Pedido(){}
 
-    public int getCodigoMultiplex() {
-        return codigoMultiplex;
+    public int getCodigoPedido() {
+        return codigoPedido;
     }
 
-    public Date getFechaFuncion() {
-        return fechaFuncion;
+    public int getCodigoMultiplex() {
+        return codigoMultiplex;
     }
 
     public int getCodigoPelicula() {
         return codigoPelicula;
     }
 
-    public Funcion getFuncionEscogida() {
-        return funcionEscogida;
+    public int getCodigoFuncion() {
+        return codigoFuncion;
     }
 
     public String getTipoSilla() {
         return tipoSilla;
     }
 
-    public List<Silla> getListadoSillas() {
-        return listadoSillas;
-    }
-
-    public List<SillaTM> getListadoSillasTM() {
-        return listadoSillasTM;
-    }
-
-    public List<SnackTM> getSnacksComprados() {
-        return snacksComprados;
-    }
-
-    public FacturaCompraTM getFacturaCompraTM() {
+    public static FacturaCompraTM getFacturaCompraTM() {
         return facturaCompraTM;
+    }
+
+    public void setCodigoPedido(int codigoPedido) {
+        this.codigoPedido = codigoPedido;
     }
 
     public void setCodigoMultiplex(int codigoMultiplex) {
         this.codigoMultiplex = codigoMultiplex;
     }
 
-    public void setFechaFuncion(Date fechaFuncion) {
-        this.fechaFuncion = fechaFuncion;
-    }
-
     public void setCodigoPelicula(int codigoPelicula) {
         this.codigoPelicula = codigoPelicula;
     }
 
-    public void setFuncionEscogida(Funcion funcionEscogida) {
-        this.funcionEscogida = funcionEscogida;
+    public void setCodigoFuncion(int codigoFuncion) {
+        this.codigoFuncion = codigoFuncion;
     }
 
     public void setTipoSilla(String tipoSilla) {
         this.tipoSilla = tipoSilla;
     }
 
-    public void setListadoSillas(List<Silla> listadoSillas) {
-        this.listadoSillas = listadoSillas;
-    }
-
-    public void setListadoSillasTM(List<SillaTM> listadoSillasTM) {
-        this.listadoSillasTM = listadoSillasTM;
-    }
-
-    public void setSnacksComprados(List<SnackTM> snacksComprados) {
-        this.snacksComprados = snacksComprados;
-    }
-
-    public void setFacturaCompraTM(FacturaCompraTM facturaCompraTM) {
-        this.facturaCompraTM = facturaCompraTM;
+    public static void setFacturaCompraTM(FacturaCompraTM facturaCompraTM) {
+        Pedido.facturaCompraTM = facturaCompraTM;
     }
 }

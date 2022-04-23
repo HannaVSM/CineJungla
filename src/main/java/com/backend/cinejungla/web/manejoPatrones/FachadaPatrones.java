@@ -23,15 +23,20 @@ public class FachadaPatrones {
         return procesoCompra.consultarSillasFuncion(codigoFuncion, tipoSilla);
     }
 
+
     public static void seleccionarSillas(List<SillaTM> sillasTM){
 
         procesoCompra.seleccionarSillas(sillasTM);
     }
 
+
+
     public static void seleccionarSnacks(Optional<List<SnackTM>> snacksTM){
 
         procesoCompra.seleccionarSnacks(snacksTM);
     }
+
+
 
     public static FacturaCompraTM generarFactura(){
 
@@ -42,9 +47,12 @@ public class FachadaPatrones {
         return procesoCompra.posibilidadRedimirPuntos();
     }
 
+
+
     public static void pagarFactura(boolean redimirPuntos){
         procesoCompra.pagarFactura(redimirPuntos);
     }
+
 
     public static String mostrarMensaje(){
 

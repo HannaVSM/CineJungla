@@ -2,7 +2,6 @@ package com.backend.cinejungla.web.procesoCompra;
 
 import java.io.Serializable;
 import java.sql.Date;
-import java.sql.Time;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
